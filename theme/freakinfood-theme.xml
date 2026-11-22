@@ -848,7 +848,6 @@ body#layout .section h4 { text-transform: uppercase; letter-spacing: 1.5px; }
         </div>
       </b:includable>
 
-      <!-- Blogger's standard comment includables (kept as Blogger ships them) -->
       <b:includable id='postQuickEdit' var='post'>
         <b:if cond='data:post.editUrl'>
           <span expr:class='&quot;item-control &quot; + data:post.adminClass'>
