@@ -548,11 +548,11 @@ body#layout .section h4 { text-transform: uppercase; letter-spacing: 1.5px; }
 </head>
 
 <body expr:class='&quot;ff &quot; + data:blog.pageType'>
-<b:class cond='data:view.isHomepage' name='ff-home'/>
+<b:if cond='data:view.isHomepage'><script type='text/javascript'>document.body.className += &#39; ff-home&#39;;</script></b:if>
 <a class='ff-skip' href='#ff-content'>Skip to content</a>
 
 <!-- ===== Header: logo · menu · search ===== -->
-<header class='ff-header'>
+<div class='ff-header' role='banner'>
   <div class='ff-header__inner'>
     <b:section class='ff-logo-section' id='header' maxwidgets='1' name='Logo' showaddelement='no'>
       <b:widget id='Header1' locked='true' title='FreakinFood (Header)' type='Header' version='1'>
@@ -577,7 +577,7 @@ body#layout .section h4 { text-transform: uppercase; letter-spacing: 1.5px; }
       </b:widget>
     </b:section>
 
-    <nav aria-label='Main' class='ff-nav' id='ff-nav'>
+    <div aria-label='Main' class='ff-nav' id='ff-nav' role='navigation'>
       <b:section class='ff-menu' id='menu' maxwidgets='1' name='Main Menu' showaddelement='no'>
         <b:widget id='LinkList210' locked='true' title='Menu' type='LinkList' version='1'>
           <b:widget-settings>
@@ -606,7 +606,7 @@ body#layout .section h4 { text-transform: uppercase; letter-spacing: 1.5px; }
           </b:includable>
         </b:widget>
       </b:section>
-    </nav>
+    </div>
 
     <button aria-controls='ff-search' aria-expanded='false' aria-label='Search' class='ff-icon-btn' id='ff-search-toggle' type='button'>
       <svg aria-hidden='true' viewBox='0 0 24 24'><circle cx='11' cy='11' r='7'/><path d='M20 20l-4-4'/></svg>
@@ -622,11 +622,11 @@ body#layout .section h4 { text-transform: uppercase; letter-spacing: 1.5px; }
       <button class='ff-btn ff-btn--primary' type='submit'>Search</button>
     </div>
   </form>
-</header>
+</div>
 
 <!-- ===== Homepage hero: intro (left) + featured post (right) ===== -->
 <div class='ff-only-home'>
-  <section class='ff-wrap ff-hero'>
+  <div class='ff-wrap ff-hero'>
     <div class='ff-hero__text'>
       <b:section class='ff-hero-intro' id='ff-hero' maxwidgets='1' name='Homepage intro' showaddelement='no'>
         <b:widget id='HTML401' locked='false' title='' type='HTML' version='1'>
@@ -671,7 +671,7 @@ body#layout .section h4 { text-transform: uppercase; letter-spacing: 1.5px; }
         </b:widget>
       </b:section>
     </div>
-  </section>
+  </div>
 </div>
 
 <!-- ===== Today's highlights: posts labelled "Highlight", filled in by the script at the end ===== -->
@@ -687,7 +687,7 @@ body#layout .section h4 { text-transform: uppercase; letter-spacing: 1.5px; }
 </b:if>
 
 <!-- ===== Main: latest posts on the homepage, section grids, single posts and pages ===== -->
-<main class='ff-main' id='ff-content'>
+<div class='ff-main' id='ff-content' role='main'>
   <b:section class='main' id='main' name='Posts' showaddelement='no'>
     <b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog' version='1'>
       <b:widget-settings>
@@ -712,7 +712,7 @@ body#layout .section h4 { text-transform: uppercase; letter-spacing: 1.5px; }
       <b:includable id='main' var='top'>
         <b:if cond='data:blog.pageType in {&quot;item&quot;,&quot;static_page&quot;}'>
           <b:loop values='data:posts' var='post'>
-            <b:include data='post' name='ffSingle'/>
+            <b:include data='post' name='ff_single'/>
           </b:loop>
         <b:elseif cond='data:blog.pageType == &quot;error_page&quot;'/>
           <div class='ff-wrap ff-404'>
@@ -729,28 +729,22 @@ body#layout .section h4 { text-transform: uppercase; letter-spacing: 1.5px; }
                 <a class='ff-section-head__link' href='/search'>All posts →</a>
               </div>
             <b:else/>
-              <b:include name='ffArchiveHead'/>
+              <b:include name='ff_archive_head'/>
             </b:if>
-            <b:if cond='data:posts'>
-              <div class='ff-grid'>
-                <b:loop values='data:posts' var='post'>
-                  <b:include data='post' name='ffCard'/>
-                </b:loop>
-              </div>
-            <b:else/>
-              <p class='ff-empty'>Nothing here yet — new posts are on their way.</p>
-            </b:if>
-            <b:if cond='data:newerPageUrl or data:olderPageUrl'>
-              <nav aria-label='More posts' class='ff-pager'>
-                <b:if cond='data:newerPageUrl'><a expr:href='data:newerPageUrl'>← Newer posts</a><b:else/><span/></b:if>
-                <b:if cond='data:olderPageUrl'><a expr:href='data:olderPageUrl'>Older posts →</a></b:if>
-              </nav>
-            </b:if>
+            <div class='ff-grid'>
+              <b:loop values='data:posts' var='post'>
+                <b:include data='post' name='ff_card'/>
+              </b:loop>
+            </div>
+            <div class='ff-pager'>
+              <b:if cond='data:newerPageUrl'><a expr:href='data:newerPageUrl'>← Newer posts</a><b:else/><span/></b:if>
+              <b:if cond='data:olderPageUrl'><a expr:href='data:olderPageUrl'>Older posts →</a></b:if>
+            </div>
           </div>
         </b:if>
       </b:includable>
 
-      <b:includable id='ffArchiveHead'>
+      <b:includable id='ff_archive_head'>
         <header class='ff-archive-head'>
           <b:if cond='data:view.isLabelSearch'>
             <span class='ff-eyebrow'>The Blog</span>
@@ -780,7 +774,7 @@ body#layout .section h4 { text-transform: uppercase; letter-spacing: 1.5px; }
         </header>
       </b:includable>
 
-      <b:includable id='ffCard' var='post'>
+      <b:includable id='ff_card' var='post'>
         <article class='ff-card'>
           <a aria-hidden='true' class='ff-card__media' expr:href='data:post.url' tabindex='-1'>
             <b:if cond='data:post.thumbnailUrl'>
@@ -801,7 +795,7 @@ body#layout .section h4 { text-transform: uppercase; letter-spacing: 1.5px; }
         </article>
       </b:includable>
 
-      <b:includable id='ffSingle' var='post'>
+      <b:includable id='ff_single' var='post'>
         <article class='ff-post'>
           <header class='ff-post__head'>
             <b:if cond='data:blog.pageType == &quot;item&quot;'>
@@ -1195,7 +1189,7 @@ body#layout .section h4 { text-transform: uppercase; letter-spacing: 1.5px; }
       </b:widget>
     </b:section>
   </div>
-</main>
+</div>
 
 <!-- ===== Explore: the four sections ===== -->
 <b:if cond='data:view.isHomepage'>
@@ -1224,7 +1218,7 @@ body#layout .section h4 { text-transform: uppercase; letter-spacing: 1.5px; }
 
 <!-- ===== Who we are (edit in Layout › Who we are) ===== -->
 <div class='ff-only-home'>
-  <section class='ff-wrap ff-section'>
+  <div class='ff-wrap ff-section'>
     <b:section class='ff-who-section' id='ff-who' maxwidgets='1' name='Who we are' showaddelement='no'>
       <b:widget id='HTML402' locked='false' title='' type='HTML' version='1'>
         <b:widget-settings>
@@ -1253,7 +1247,7 @@ body#layout .section h4 { text-transform: uppercase; letter-spacing: 1.5px; }
         </b:includable>
       </b:widget>
     </b:section>
-  </section>
+  </div>
 </div>
 
 <!-- ===== Newsletter (edit in Layout › Newsletter; paste your provider's form action) ===== -->
