@@ -1,0 +1,101 @@
+<!--
+  FreakinFood recipe sheet + schema.org Recipe data
+  ------------------------------------------------------------
+  The styling lives in the theme (.ff-rc-*). It only applies to posts with
+  the label "Recipes", so add that label to the post.
+
+  How to use:
+  1. In the Blogger post editor, switch to HTML view.
+  2. Paste everything below (the <div> and the <script>) where the recipe goes.
+  3. Replace every [PLACEHOLDER]. For the photo, switch back to Compose view,
+     click inside the photo box and use Blogger's image button.
+  4. Keep the visible sheet and the JSON-LD in sync: readers see the sheet,
+     Google and Pinterest read the JSON-LD.
+  5. Check the published post at https://search.google.com/test/rich-results
+
+  Fact icons: ff-i-prep / ff-i-time (clock), ff-i-chill (snowflake),
+  ff-i-bake (flame), ff-i-oven (thermometer); no extra class = cutlery.
+  JSON-LD times are ISO 8601: PT45M = 45 min, PT1H15M = 1 h 15 min.
+-->
+<div class="ff-rc-sheet">
+  <div class="ff-rc-intro">
+    <p class="ff-rc-tagline">[One line that sells the dish.]</p>
+    <div class="ff-rc-photo">[Insert the main photo here]</div>
+  </div>
+
+  <div class="ff-rc-facts">
+    <p class="ff-rc-fact ff-i-prep"><b>Prep</b>[20 min]</p>
+    <p class="ff-rc-fact ff-i-time"><b>Cook</b>[25 min]</p>
+    <p class="ff-rc-fact"><b>Serves</b>[4]</p>
+    <p class="ff-rc-fact ff-i-oven"><b>Oven</b>[200 °C]</p>
+  </div>
+
+  <div class="ff-rc-cols">
+    <div class="ff-rc-ingredients">
+      <h3>Ingredients</h3>
+      <p>[For the sauce]</p>
+      <ul>
+        <li>[Ingredient] <i>([note])</i></li>
+        <li>[Ingredient]</li>
+      </ul>
+      <p>[For the rest]</p>
+      <ul>
+        <li>[Ingredient]</li>
+        <li>[Ingredient]</li>
+      </ul>
+    </div>
+    <div class="ff-rc-method">
+      <h3>Method</h3>
+      <ol>
+        <li>[Step one.]</li>
+        <li>[Step two.]</li>
+        <li>[Step three.]</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="ff-rc-extras">
+    <div class="ff-rc-tips">
+      <h3>Tips</h3>
+      <ul>
+        <li><b>[Short title].</b> [The tip.]</li>
+      </ul>
+    </div>
+    <div class="ff-rc-variations">
+      <h3>Variations</h3>
+      <ul>
+        <li><b>[Variation].</b> [What changes.]</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Recipe",
+  "name": "[Recipe name — same as the post title]",
+  "description": "[One-line description.]",
+  "image": ["[Full URL of the main photo — right-click it in the published post, Copy image address]"],
+  "author": [
+    { "@type": "Person", "name": "[Emanuel or Son]" }
+  ],
+  "datePublished": "[2026-11-22]",
+  "recipeCuisine": "[Vietnamese / Italian / Swedish]",
+  "recipeCategory": "[Main course]",
+  "keywords": "[three or four search phrases]",
+  "prepTime": "[PT20M]",
+  "cookTime": "[PT25M]",
+  "totalTime": "[PT45M]",
+  "recipeYield": "[4 servings]",
+  "recipeIngredient": [
+    "[Ingredient]",
+    "[Ingredient]"
+  ],
+  "recipeInstructions": [
+    { "@type": "HowToStep", "text": "[Step one.]" },
+    { "@type": "HowToStep", "text": "[Step two.]" },
+    { "@type": "HowToStep", "text": "[Step three.]" }
+  ]
+}
+</script>
