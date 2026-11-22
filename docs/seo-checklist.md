@@ -5,12 +5,10 @@
 - [ ] **Settings → Meta tags → Search description** on, with a ~150-character site description.
 - [ ] **Settings → Publishing**: custom domain + HTTPS redirect (see `custom-domain.md`).
 - [ ] **Google Search Console**: verify `freakinfood.com` (DNS TXT record at Tratto), submit `https://www.freakinfood.com/sitemap.xml`.
-- [ ] Theme `<head>`: fill in or delete the commented-out `fb:app_id` / `twitter:site` lines.
-- [ ] The `keywords` meta tag in the theme is ignored by Google; harmless, no need to maintain it.
 
 ## Every post
 
-- [ ] Exactly one of the section labels: **Post**, **Recipes** or **Reviews** (plus any topic labels).
+- [ ] One section label: **Recipes**, **Drinks**, **Stories** or **Reviews** plus any topic labels; add **Highlight** to feature it on the homepage.
 - [ ] Dish and place names in their own spelling (bún chả, not bun cha).
 - [ ] **Search description** in the post settings sidebar, one sentence.
 - [ ] **Permalink → Custom**: short, e.g. `bun-cha-hanoi`.
