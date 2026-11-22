@@ -27,9 +27,11 @@ docs/
 |---|---|---|
 | Home | `/` | — |
 | Blog (all posts) | `/search` | — |
-| Posts | `/search/label/Post` | `Post` |
 | Recipes | `/search/label/Recipes` | `Recipes` |
-| Reviews | `/search/label/Reviews` | `Reviews` |
+| Drinks | `/search/label/Drinks` | `Drinks` |
+| Food Stories & Tips | `/search/label/Stories` | `Stories` |
+| Restaurant Reviews | `/search/label/Reviews` | `Reviews` |
+| Homepage highlights | `/search/label/Highlight` | `Highlight` |
 | About | `/p/about-us.html` | — |
 | Contact | `/p/contact-us.html` | — |
 
