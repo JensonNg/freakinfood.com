@@ -1,26 +1,46 @@
-# Updating the theme on Blogger
+# Testing and installing theme v2
 
-Blogger doesn't deploy from GitHub. `theme/freakinfood-theme.xml` is the source of truth; changes are copied into Blogger by hand.
+Blogger doesn't deploy from GitHub: `theme/freakinfood-theme.xml` is copied in by hand.
 
-## Every change
+## 1. Test on a spare blog first
 
-1. **Back up the live theme:** Theme → ▾ → **Backup** → Download theme. Commit it to `theme/backups/YYYY-MM-DD-freakinfood-theme.xml`.
-2. Edit `theme/freakinfood-theme.xml` in this repo and commit.
-3. Blogger → Theme → ▾ → **Edit HTML** → select all → paste the new file → **Save**.
-   If Blogger reports an XML error it gives a line number; fix it here and paste again.
-4. Check on desktop and phone:
-   - homepage (intro, latest-posts grid, author cards)
-   - `/search` and a label page (pills switch sections)
-   - one post each labelled **Post**, **Recipes** and **Reviews**
-   - `/p/about-us.html` and `/p/contact-us.html` (contact form shows only here)
-5. If something breaks: Theme → ▾ → **Restore** → upload the backup from step 1.
+1. In Blogger, **New blog** → e.g. "FreakinFood test". Keep it private (Settings › Permissions › Reader access: Private).
+2. Copy a few real posts in, with images. Give them the labels **Recipes**, **Drinks**, **Stories**, **Reviews**, and add **Highlight** to three of them.
+3. Create two pages: **About us** (URL `/p/about-us.html`) and **Contact us** (`/p/contact-us.html`).
+4. **Theme › ▾ › Restore › Upload** `freakinfood-theme.xml`.
+   If Blogger shows an error, copy the message (it has a line number) and send it over.
 
-## How the site is wired
+## 2. Set up the gadgets (Layout tab)
 
-- **Labels drive layouts.** `Post`, `Recipes` and `Reviews` switch a post to its layout; label pages get their intro line from the theme. Use exactly these spellings.
-- **Menu:** Layout → Main Menu. A leading `_` makes an item a sub-item (`_Recipes` sits under Blog). Any link containing `contact` gets the green button style.
-- **Editable blocks (Layout tab):** Homepage intro, Author cards, Contact page form, Follow Us (sidebar), footer about text.
+| Gadget | What to do |
+|---|---|
+| Logo | Already points to your logo image. To change it: upload a new image, "Instead of title and description". |
+| Main Menu | Check the links. `/search/label/…` links go to label pages. |
+| Homepage intro | Edit the text if you like; keep the `class` names. |
+| Homepage featured post | Untick "Use most recent post" and pick the post for the hero. Its first image is the hero photo; a tall (portrait) image works best. |
+| Who we are | Edit text and photos. |
+| Newsletter | Replace `action="#"` with your newsletter service's form action (see below). |
+| Contact page form | Nothing to do; it appears on the Contact page only. |
 
-## Changing colours
+Settings › Posts › **Number of posts on main page**: 4 (one row) or 8 (two rows).
 
-Theme → Customise → Advanced lists the colour variables (rust, forest green, green mid, body text…). Quick tweaks there are fine, but download the theme afterwards and commit it so the repo matches.
+## 3. Check
+
+- Homepage on desktop and phone: hero, Today's Highlights, Latest, Explore, Who we are, Newsletter, footer.
+- A label page (`/search/label/Recipes`): heading, pills, grid, older posts link.
+- A post with the recipe sheet, a review with map/gallery/scores, comments on a post.
+- `/p/contact-us.html`: the form shows and sends.
+- The menu button and search on a phone.
+
+## 4. Go live
+
+1. Back up the live theme (Theme › ▾ › Backup) and commit it to `theme/backups/`.
+2. Restore the new theme on the live blog, then redo step 2 there.
+3. Relabel old posts: `Post` / `Food Talk` → `Stories`; add `Drinks` where it fits; tag three posts `Highlight`.
+4. Rebuild the old hand-made homepage links: the theme now fills the homepage by itself, so the old homepage **page** (with links to the Blogger editor) can be deleted or turned into a draft.
+
+If anything breaks: Theme › ▾ › Restore → upload the backup from step 4.1.
+
+## Newsletter
+
+Blogger's old "Follow by Email" stopped sending emails in 2021. Pick a service (MailerLite and Brevo have free tiers), create a signup form, and copy its **form action URL** and **email field name** into the Newsletter gadget (`action="…"` and `name="…"`).

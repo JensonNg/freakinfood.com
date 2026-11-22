@@ -8,9 +8,9 @@ The site runs on **Blogger** at **www.freakinfood.com** (domain registered at Tr
 
 ```
 theme/
-  freakinfood-theme.xml   The live Blogger theme (Fooddy — FreakinFood edition)
+  freakinfood-theme.xml   FreakinFood theme v2 for Blogger
   backups/                Dated downloads of the live theme, one before every change
-  README.md               What the FreakinFood edition changes, known leftovers
+  README.md               What the theme does, labels it expects
 snippets/
   recipe-card.html        Recipe sheet (.ff-rc-*) + schema.org Recipe JSON-LD for posts
 assets/                   Logos, favicon, social images
@@ -27,9 +27,11 @@ docs/
 |---|---|---|
 | Home | `/` | — |
 | Blog (all posts) | `/search` | — |
-| Posts | `/search/label/Post` | `Post` |
 | Recipes | `/search/label/Recipes` | `Recipes` |
-| Reviews | `/search/label/Reviews` | `Reviews` |
+| Drinks | `/search/label/Drinks` | `Drinks` |
+| Food Stories & Tips | `/search/label/Stories` | `Stories` |
+| Restaurant Reviews | `/search/label/Reviews` | `Reviews` |
+| Homepage highlights | `/search/label/Highlight` | `Highlight` |
 | About | `/p/about-us.html` | — |
 | Contact | `/p/contact-us.html` | — |
 

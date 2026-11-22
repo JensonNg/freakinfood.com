@@ -1,0 +1,1425 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html b:version='2' class='v2' expr:dir='data:blog.languageDirection' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<head>
+  <meta content='width=device-width, initial-scale=1' name='viewport'/>
+  <b:include data='blog' name='all-head-content'/>
+  <title>
+    <b:if cond='data:blog.pageType == &quot;index&quot;'>
+      <data:blog.pageTitle/>
+    <b:else/>
+      <b:if cond='data:blog.pageType != &quot;error_page&quot;'>
+        <data:blog.pageName/> - <data:blog.title/>
+      <b:else/>
+        Page not found - <data:blog.title/>
+      </b:if>
+    </b:if>
+  </title>
+  <b:if cond='data:view.isHomepage'>
+    <script type='application/ld+json'>{&quot;@context&quot;:&quot;https://schema.org&quot;,&quot;@type&quot;:&quot;WebSite&quot;,&quot;name&quot;:&quot;<data:view.title.escaped/>&quot;,&quot;url&quot;:&quot;<data:view.url.canonical/>&quot;,&quot;potentialAction&quot;:{&quot;@type&quot;:&quot;SearchAction&quot;,&quot;target&quot;:&quot;<data:view.url.canonical/>search?q={search_term_string}&quot;,&quot;query-input&quot;:&quot;required name=search_term_string&quot;}}</script>
+    <meta content='Playful recipes, cozy drinks and honest restaurant reviews from Emanuel and Son: Italy × Vietnam × Sweden.' name='description'/>
+  </b:if>
+  <meta expr:content='data:view.title.escaped' property='og:title'/>
+  <meta expr:content='data:view.url.canonical' property='og:url'/>
+  <b:if cond='data:blog.pageType == &quot;item&quot;'>
+    <meta content='article' property='og:type'/>
+  <b:else/>
+    <meta content='website' property='og:type'/>
+  </b:if>
+  <b:if cond='data:blog.postImageUrl'>
+    <meta expr:content='data:blog.postImageUrl' property='og:image'/>
+    <meta content='summary_large_image' name='twitter:card'/>
+    <meta expr:content='data:blog.postImageUrl' name='twitter:image'/>
+  <b:else/>
+    <meta content='summary' name='twitter:card'/>
+  </b:if>
+  <b:if cond='data:blog.metaDescription != &quot;&quot;'>
+    <meta expr:content='data:blog.metaDescription' property='og:description'/>
+  </b:if>
+  <meta expr:content='data:blog.title' property='og:site_name'/>
+  <link href='https://fonts.googleapis.com' rel='preconnect'/>
+  <link crossorigin='anonymous' href='https://fonts.gstatic.com' rel='preconnect'/>
+  <link href='https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,300;0,400;1,200;1,300;1,400&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;family=Inter:wght@400;500&amp;display=swap' rel='stylesheet'/>
+
+<b:skin><![CDATA[/*
+-----------------------------------------------
+FreakinFood — Blogger theme v2
+Playful recipes, cozy drinks & honest restaurant reviews.
+Source: github.com/JensonNg/freakinfood.com (theme/freakinfood-theme.xml)
+Built from the FreakinFood design system and the homepage redesign.
+-----------------------------------------------
+<Variable name="bodybackground" description="Background" type="background" color="#fbf9f8" default="$(color) url() repeat fixed top left" value="$(color) url() repeat fixed top left"/>
+<Variable name="maincolor" description="Accent — Rust" type="color" default="#9d4225" value="#9d4225"/>
+<Variable name="maindarkcolor" description="Primary — Forest Green" type="color" default="#264224" value="#264224"/>
+<Variable name="greenmid" description="Primary Mid" type="color" default="#3d5a39" value="#3d5a39"/>
+<Variable name="bodytext" description="Body Text" type="color" default="#434840" value="#434840"/>
+<Variable name="textdark" description="Heading Text" type="color" default="#1b1c1c" value="#1b1c1c"/>
+<Variable name="sagemuted" description="Sage Muted" type="color" default="#c3c8bd" value="#c3c8bd"/>
+<Variable name="surfacecard" description="Card Surface" type="color" default="#ffffff" value="#ffffff"/>
+<Variable name="surfacealt" description="Alt Surface" type="color" default="#f6f3f2" value="#f6f3f2"/>
+<Variable name="bordersoft" description="Soft Fill" type="color" default="#eae8e7" value="#eae8e7"/>
+*/
+
+:root {
+  --rust: $maincolor;
+  --green-dark: $maindarkcolor;
+  --green-mid: $greenmid;
+  --body: $bodytext;
+  --ink: $textdark;
+  --sage: $sagemuted;
+  --card: $surfacecard;
+  --alt: $surfacealt;
+  --soft: $bordersoft;
+  --hairline: rgba(195,200,189,0.35);
+  --nav-link: rgba(27,28,28,0.72);
+  --serif: 'Newsreader', Georgia, serif;
+  --sans: 'Be Vietnam Pro', system-ui, sans-serif;
+  --ui: 'Inter', system-ui, sans-serif;
+  --shadow-card: 0 8px 32px rgba(38,66,36,0.06);
+  --shadow-cta: 0 20px 25px -5px rgba(38,66,36,0.1);
+  --grad: linear-gradient(164.7deg, var(--green-dark) 0%, var(--green-mid) 100%);
+  --ease: 0.3s ease;
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: $bodybackground;
+  color: var(--body);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; height: auto; }
+a { color: var(--green-dark); text-decoration: none; transition: color var(--ease); }
+a:hover { color: var(--rust); }
+:focus-visible { outline: 2px solid var(--rust); outline-offset: 3px; }
+h1, h2, h3, h4 { font-family: var(--serif); font-weight: 200; font-style: italic; color: var(--green-dark); }
+[hidden] { display: none !important; }
+.ff-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.ff-skip { position: absolute; left: 16px; top: -60px; z-index: 100; padding: 10px 16px; background: var(--green-dark); color: #fff; border-radius: 6px; }
+.ff-skip:focus { top: 12px; color: #fff; }
+.ff-wrap { width: 100%; max-width: 1150px; margin: 0 auto; padding: 0 48px; }
+.section, .widget { margin: 0; }
+.quickedit, .item-control { display: none; }
+
+/* Page-type gating */
+body:not(.ff-home) .ff-only-home { display: none !important; }
+html:not(.ff-contact) .ff-only-contact { display: none !important; }
+
+/* ---------- Type helpers ---------- */
+.ff-eyebrow {
+  display: block; margin: 0 0 12px;
+  font-family: var(--ui); font-size: 12px; line-height: 18px; letter-spacing: 2.4px;
+  text-transform: uppercase; color: var(--rust);
+}
+
+/* ---------- Buttons ---------- */
+.ff-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 44px; padding: 14px 26px; border: 0; border-radius: 6px; cursor: pointer;
+  font-family: var(--ui); font-size: 13px; letter-spacing: 0.7px; text-transform: uppercase;
+  line-height: 1; text-decoration: none; color: #fff;
+  transition: background var(--ease), opacity var(--ease), transform var(--ease);
+}
+.ff-btn--primary { background: var(--grad); }
+.ff-btn--primary:hover { background: var(--rust); color: #fff; }
+.ff-btn--cta { background: var(--grad); box-shadow: var(--shadow-cta); font-size: 14px; padding: 19px 32px; }
+.ff-btn--cta:hover { color: #fff; opacity: 0.9; transform: translateY(-1px); }
+.ff-btn--accent { background: var(--rust); font-size: 14px; padding: 19px 32px; }
+.ff-btn--accent:hover { background: var(--grad); color: #fff; }
+.ff-textlink {
+  display: inline-flex; align-items: center; min-height: 44px;
+  font-family: var(--ui); font-size: 14px; letter-spacing: 0.7px; text-transform: uppercase;
+  color: var(--ink); text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px;
+}
+
+/* ---------- Header ---------- */
+.ff-header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(251,249,248,0.88);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(195,200,189,0.2);
+}
+.ff-header__inner { display: flex; align-items: center; gap: 24px; height: 66px; max-width: 1150px; margin: 0 auto; padding: 0 24px; }
+.ff-logo { display: inline-flex; align-items: center; flex: 0 0 auto; }
+.ff-logo img { display: block; height: 32px; width: auto; }
+.ff-logo__text { font-family: var(--serif); font-size: 28px; font-weight: 400; font-style: normal; color: var(--ink); letter-spacing: -0.6px; }
+.ff-nav { flex: 1 1 auto; }
+.ff-nav .widget { margin: 0; }
+.ff-nav__list { list-style: none; margin: 0; padding: 0; display: flex; justify-content: center; gap: 32px; }
+.ff-nav__list li { margin: 0; padding: 0; }
+.ff-nav__list a { position: relative; display: inline-block; padding: 8px 0; font-size: 16px; color: var(--nav-link); }
+.ff-nav__list a:hover, .ff-nav__list a[aria-current='page'] { color: var(--green-dark); }
+.ff-nav__list a[aria-current='page']::after { content: ''; position: absolute; left: -12px; right: -12px; bottom: -4px; height: 1px; background: var(--rust); }
+.ff-nav__list a[href*='contact'] {
+  padding: 11px 22px; border-radius: 6px; background: var(--grad); color: #fff;
+  font-family: var(--ui); font-size: 12px; letter-spacing: 0.7px; text-transform: uppercase; line-height: 1;
+  box-shadow: 0 10px 20px rgba(38,66,36,0.12);
+}
+.ff-nav__list a[href*='contact']:hover { color: #fff; opacity: 0.9; }
+.ff-nav__list a[href*='contact']::after { display: none; }
+.ff-icon-btn {
+  flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; padding: 0; border: 0; background: none; color: var(--green-dark); cursor: pointer;
+}
+.ff-icon-btn:hover { color: var(--rust); }
+.ff-icon-btn svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+.ff-nav-toggle { display: none; }
+.ff-search { display: none; border-top: 1px solid rgba(195,200,189,0.2); }
+.ff-search.is-open { display: block; }
+.ff-search__inner { display: flex; gap: 10px; padding-top: 12px; padding-bottom: 12px; }
+.ff-search input {
+  flex: 1 1 auto; min-width: 0; min-height: 44px; padding: 0 16px;
+  border: 1px solid rgba(195,200,189,0.6); border-radius: 6px; background: var(--card);
+  font-family: var(--sans); font-size: 15px; color: var(--ink);
+}
+
+/* ---------- Hero ---------- */
+.ff-hero {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 56px;
+  padding-top: 96px; padding-bottom: 96px; border-bottom: 1px solid var(--hairline);
+}
+.ff-hero__text { flex: 1 1 480px; min-width: 0; max-width: 600px; }
+.ff-hero__title { margin: 0 0 24px; font-size: 72px; line-height: 1.02; letter-spacing: -1.8px; }
+.ff-hero__lead { margin: 0 0 36px; max-width: 540px; font-size: 19px; line-height: 29px; }
+.ff-hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 32px; }
+.ff-hero__media { flex: 0 0 383px; }
+.ff-feature { position: relative; height: 593px; }
+.ff-feature__img {
+  position: absolute; inset: 0; display: block; overflow: hidden; border-radius: 12px;
+  background: var(--soft); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+}
+.ff-feature__img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ff-feature__img::after { content: ''; position: absolute; inset: 0; background: rgba(38,66,36,0.1); }
+.ff-feature__card {
+  position: absolute; left: -32px; top: 400px; width: 232px; padding: 28px;
+  display: flex; flex-direction: column; gap: 10px; background: var(--card);
+  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+}
+.ff-feature__eyebrow { font-family: var(--ui); font-size: 10px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--rust); }
+.ff-feature__title { font-family: var(--serif); font-weight: 200; font-style: italic; font-size: 22px; line-height: 28px; color: var(--green-dark); }
+.ff-feature__cue { font-family: var(--ui); font-size: 12px; letter-spacing: 0.7px; text-transform: uppercase; color: var(--rust); }
+.ff-feature__card:hover .ff-feature__title { color: var(--rust); }
+
+/* ---------- Sections ---------- */
+.ff-section { padding-top: 96px; }
+.ff-section-head { display: flex; align-items: flex-end; gap: 24px; margin-bottom: 56px; }
+.ff-section-head .ff-eyebrow { margin-bottom: 6px; }
+.ff-section-head__title { margin: 0; font-size: 48px; line-height: 1.1; letter-spacing: -1px; }
+.ff-section-head__rule { flex: 1 1 auto; height: 1px; margin-bottom: 14px; background: var(--hairline); }
+.ff-section-head__link { margin-bottom: 6px; font-family: var(--ui); font-size: 13px; letter-spacing: 0.7px; text-transform: uppercase; color: var(--rust); white-space: nowrap; }
+.ff-section-head__link:hover { opacity: 0.7; color: var(--rust); }
+
+/* ---------- Post cards ---------- */
+.ff-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px; }
+.ff-home .ff-main .ff-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; }
+.ff-card { display: flex; flex-direction: column; }
+.ff-card__media { display: block; aspect-ratio: 16 / 9; margin-bottom: 16px; overflow: hidden; border-radius: 8px; background: var(--soft); }
+.ff-card__media img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+.ff-card:hover .ff-card__media img { transform: scale(1.03); }
+.ff-card__eyebrow { margin: 0 0 8px; font-family: var(--ui); font-size: 10px; line-height: 15px; letter-spacing: 1px; text-transform: uppercase; color: var(--body); }
+.ff-card__eyebrow span + span::before { content: '/'; margin: 0 12px; color: var(--sage); }
+.ff-card__eyebrow span:nth-of-type(n+3) { display: none; }
+.ff-card__title { margin: 0 0 10px; font-size: 24px; line-height: 32px; }
+.ff-card__title a { color: var(--green-dark); }
+.ff-card__title a:hover { color: var(--rust); }
+.ff-card__excerpt { margin: 0; font-size: 14px; line-height: 20px; color: var(--body); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.ff-empty { padding: 40px 0; font-size: 16px; }
+.ff-pager { display: flex; justify-content: space-between; gap: 16px; margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--hairline); }
+.ff-pager a { font-family: var(--ui); font-size: 13px; letter-spacing: 0.7px; text-transform: uppercase; color: var(--rust); padding: 12px 0; }
+
+/* ---------- Archive header + pills ---------- */
+.ff-archive-head { margin: 0 0 48px; padding-bottom: 24px; border-bottom: 1px solid var(--hairline); }
+.ff-archive-head h1 { margin: 0 0 10px; font-size: 48px; line-height: 1.1; letter-spacing: -1px; }
+.ff-archive-head p { margin: 0 0 20px; max-width: 560px; font-size: 16px; }
+.ff-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.ff-pills a {
+  display: inline-flex; align-items: center; min-height: 36px; padding: 0 18px; border-radius: 999px;
+  background: var(--soft); color: var(--ink);
+  font-family: var(--ui); font-size: 12px; letter-spacing: 1px; text-transform: uppercase;
+}
+.ff-pills a:hover { color: var(--rust); }
+.ff-pills a.is-active { background: var(--green-dark); color: #fff; }
+
+/* ---------- Explore tiles ---------- */
+.ff-explore { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.ff-tile { display: flex; align-items: center; gap: 16px; padding: 22px 24px; background: var(--alt); border-radius: 12px; color: var(--green-dark); }
+.ff-tile:hover { color: var(--rust); }
+.ff-tile__icon { flex: 0 0 48px; width: 48px; height: 48px; border-radius: 50%; background: var(--grad); color: #fff; display: flex; align-items: center; justify-content: center; }
+.ff-tile__icon--rust { background: var(--rust); }
+.ff-tile__icon svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.ff-tile__label { flex: 1 1 auto; font-family: var(--serif); font-weight: 300; font-style: italic; font-size: 24px; line-height: 1.2; }
+.ff-tile__arrow { color: var(--rust); }
+
+/* ---------- Who we are ---------- */
+.ff-who { display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-start; }
+.ff-who__text { flex: 1.3 1 420px; min-width: 0; font-size: 18px; line-height: 30px; }
+.ff-who__text p { margin: 0 0 20px; }
+.ff-who__people { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 8px; }
+.ff-person { flex: 1 1 200px; display: flex; align-items: center; gap: 14px; padding: 16px 18px; background: var(--card); border: 1px solid var(--hairline); border-radius: 12px; }
+.ff-person__photo { flex: 0 0 52px; width: 52px; height: 52px; border-radius: 50%; overflow: hidden; background: var(--alt); border: 1px solid rgba(195,200,189,0.5); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--green-dark); }
+.ff-person__photo img { width: 100%; height: 100%; object-fit: cover; }
+.ff-person__name { display: block; font-family: var(--serif); font-weight: 200; font-style: italic; font-size: 22px; line-height: 1.15; color: var(--green-dark); }
+.ff-person__role { display: block; font-family: var(--ui); font-size: 10px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--rust); }
+.ff-note { flex: 1 1 320px; min-width: 0; padding: 20px 22px 22px; background: var(--card); border: 1px solid var(--hairline); border-radius: 12px; box-shadow: var(--shadow-card); }
+.ff-note h3 { margin: 0 0 18px; padding-bottom: 14px; border-bottom: 1px solid rgba(195,200,189,0.3); font-family: var(--ui); font-style: normal; font-weight: 400; font-size: 12px; letter-spacing: 2.4px; text-transform: uppercase; color: var(--green-dark); }
+.ff-note p { margin: 0 0 12px; font-size: 15px; line-height: 1.65; }
+.ff-note p:last-child { margin: 0; }
+
+/* ---------- Newsletter ---------- */
+.ff-news {
+  position: relative; overflow: hidden; padding: 64px; border-radius: 12px;
+  background: radial-gradient(circle at 100% 0%, rgba(157,66,37,0.35) 0%, rgba(157,66,37,0) 42%), linear-gradient(155deg, var(--green-dark) 0%, var(--green-mid) 100%);
+  display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 40px;
+}
+.ff-news__text { flex: 1 1 420px; min-width: 0; }
+.ff-news .ff-eyebrow { color: rgba(255,255,255,0.78); }
+.ff-news h2 { margin: 0 0 16px; font-size: 48px; line-height: 1.1; color: #fff; }
+.ff-news p { margin: 0; max-width: 460px; font-size: 18px; line-height: 1.55; color: rgba(255,255,255,0.82); }
+.ff-news form { flex: 1 1 360px; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+.ff-news label { font-family: var(--ui); font-size: 11px; letter-spacing: 1.6px; text-transform: uppercase; color: rgba(255,255,255,0.82); }
+.ff-news__row { display: flex; flex-wrap: wrap; gap: 10px; }
+.ff-news input {
+  flex: 1 1 200px; min-width: 0; height: 53px; padding: 0 18px;
+  border: 1px solid rgba(255,255,255,0.35); border-radius: 6px; background: rgba(255,255,255,0.1);
+  color: #fff; font-family: var(--sans); font-size: 15px;
+}
+.ff-news input::placeholder { color: rgba(255,255,255,0.7); }
+
+/* ---------- Single post / page ---------- */
+.ff-post__head { max-width: 820px; margin: 0 auto; padding: 64px 24px 36px; text-align: center; }
+.ff-post__section { margin: 0 0 18px; font-family: var(--ui); font-size: 11px; letter-spacing: 1.8px; text-transform: uppercase; }
+.ff-post__section a { color: var(--rust); }
+.ff-post__title { margin: 0 0 18px; font-size: 58px; line-height: 1.05; letter-spacing: -1.4px; }
+.ff-post__meta { margin: 0; font-family: var(--ui); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--body); }
+.ff-post__meta span + span::before, .ff-post__meta time::before { content: '\00b7'; margin: 0 12px; color: var(--sage); }
+.ff-post__meta .ff-readtime:empty { display: none; }
+.ff-post__body { max-width: 680px; margin: 0 auto; padding: 0 24px; font-size: 18px; line-height: 1.78; color: var(--body); }
+.ff-post__body p { margin: 0 0 26px; }
+.ff-post__body a { color: var(--green-dark); text-decoration: underline; text-underline-offset: 2px; }
+.ff-post__body a:hover { color: var(--rust); }
+.ff-post__body h2 { font-size: 36px; line-height: 1.2; margin: 52px 0 18px; clear: left; }
+.ff-post__body h3 { font-size: 26px; line-height: 1.25; margin: 36px 0 12px; }
+.ff-post__body ul, .ff-post__body ol { padding-left: 1.3em; margin: 0 0 26px; }
+.ff-post__body li { margin-bottom: 8px; }
+.ff-post__body ul li::marker { color: var(--rust); }
+.ff-post__body blockquote { margin: 40px 0; padding: 8px 0 8px 22px; border-left: 3px solid var(--rust); font-family: var(--serif); font-weight: 200; font-style: italic; font-size: 24px; line-height: 1.45; color: var(--green-dark); }
+.ff-post__body img { width: 100%; height: auto; border-radius: 4px; }
+.ff-post__body .separator { margin: 36px 0 !important; text-align: center !important; }
+.ff-post__body .separator a { margin: 0 !important; display: block; }
+.ff-post__body .tr-caption-container { width: 100%; margin: 36px 0; padding: 0; }
+.ff-post__body .tr-caption-container td { padding: 0; }
+.ff-post__body .tr-caption, .ff-post__body .ff-caption {
+  display: block; text-align: left !important; padding-top: 10px;
+  font-family: var(--ui); font-size: 12px !important; line-height: 1.5; color: rgba(27,28,28,0.7);
+}
+.static_page .ff-post__head { padding-bottom: 24px; }
+
+/* Shared body blocks */
+.ff-post__body .ff-standfirst { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 23px !important; line-height: 1.5 !important; text-align: center; max-width: 620px; margin: -8px auto 40px !important; }
+.ff-post__body .ff-lead { position: relative; left: 50%; transform: translateX(-50%); width: 1150px; max-width: 96vw; margin: 0 0 56px; }
+.ff-post__body .ff-lead .separator, .ff-post__body .ff-lead .tr-caption-container { margin: 0 !important; }
+.ff-post__body .ff-lead img { max-height: 640px; object-fit: cover; }
+.ff-post__body .ff-pullquote { margin: 48px 0 !important; padding: 28px 0; border-top: 1px solid var(--sage); border-bottom: 1px solid var(--sage); font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 30px !important; line-height: 1.3 !important; color: var(--green-dark); text-align: center; }
+.ff-post__body a.ff-btn { text-decoration: none; color: #fff; }
+.ff-post__body .ff-eyebrow { margin: 0 0 8px; font-size: 11px; letter-spacing: 1.8px; }
+.ff-post__body p.ff-dropcap::first-letter { float: left; font-family: var(--serif); font-style: normal; font-weight: 300; font-size: 84px; line-height: 0.8; padding: 8px 10px 0 0; color: var(--green-dark); }
+
+/* Recipe sheet (snippets/recipe-card.html) */
+.ff-post__body .ff-rc-sheet { position: relative; left: 50%; transform: translateX(-50%); width: 1040px; max-width: 96vw; margin: 0 0 40px; padding: 36px 40px 40px; background: var(--alt); border: 1px solid rgba(195,200,189,0.6); border-radius: 18px; }
+.ff-post__body .ff-rc-sheet ul, .ff-post__body .ff-rc-sheet ol { padding: 0; margin: 0; }
+.ff-post__body .ff-rc-intro { display: flex; flex-wrap: wrap; align-items: center; gap: 28px; margin: 0 0 28px; }
+.ff-post__body .ff-rc-tagline { flex: 1 1 320px; margin: 0 !important; padding: 18px 26px; background: var(--card); border: 1px solid rgba(195,200,189,0.6); border-radius: 6px; font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 24px !important; line-height: 1.4 !important; color: var(--green-dark); text-align: center; }
+.ff-post__body .ff-rc-photo { flex: 1 1 360px; }
+.ff-post__body .ff-rc-photo .separator, .ff-post__body .ff-rc-photo .tr-caption-container { margin: 0 !important; }
+.ff-post__body .ff-rc-photo img { border-radius: 12px; max-height: 360px; object-fit: cover; }
+.ff-post__body .ff-rc-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); margin: 0 0 32px; background: var(--card); border: 1px solid rgba(195,200,189,0.6); border-radius: 14px; }
+.ff-post__body .ff-rc-fact {
+  --ff-i: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 3v8M4.5 3v4.5a2.5 2.5 0 0 0 5 0V3M7 11v10M17 21V3c-2.2 1.2-3.5 3.6-3.5 6.5V13H17'/%3E%3C/svg%3E");
+  --ff-ic: var(--rust);
+  position: relative; margin: 0 !important; padding: 18px 16px 18px 58px; border-right: 1px dashed var(--sage);
+  line-height: 1.35 !important; font-size: 15px; color: var(--ink);
+}
+.ff-post__body .ff-rc-fact:last-child { border-right: 0; }
+.ff-post__body .ff-rc-fact::before { content: ''; position: absolute; left: 18px; top: 50%; width: 26px; height: 26px; transform: translateY(-50%); background: var(--ff-ic); -webkit-mask: var(--ff-i) center / contain no-repeat; mask: var(--ff-i) center / contain no-repeat; }
+.ff-post__body .ff-rc-fact.ff-i-prep, .ff-post__body .ff-rc-fact.ff-i-time {
+  --ff-i: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7v5l3 2'/%3E%3C/svg%3E");
+  --ff-ic: var(--green-dark);
+}
+.ff-post__body .ff-rc-fact.ff-i-chill {
+  --ff-i: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3v18M4.2 7.5l15.6 9M19.8 7.5l-15.6 9'/%3E%3C/svg%3E");
+  --ff-ic: #3b6e9c;
+}
+.ff-post__body .ff-rc-fact.ff-i-bake {
+  --ff-i: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3c1 4 5 5.5 5 10a5 5 0 0 1-10 0c0-2.5 1.5-3.5 2.5-5 .5 1.5 1.5 2 2.5 2 0-2.5-1-4.5 0-7z'/%3E%3C/svg%3E");
+}
+.ff-post__body .ff-rc-fact.ff-i-oven {
+  --ff-i: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 14V5a2 2 0 0 1 4 0v9a4 4 0 1 1-4 0z'/%3E%3C/svg%3E");
+}
+.ff-post__body .ff-rc-fact b { display: block; margin-bottom: 2px; font-weight: 500; font-family: var(--ui); font-size: 11px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--green-dark); }
+.ff-post__body .ff-rc-sheet h3 {
+  display: inline-block; margin: 0 0 18px !important; padding: 8px 26px 8px 16px; background: var(--green-dark); color: #fff;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 12px) 50%, 100% 100%, 0 100%);
+  font-family: var(--ui); font-style: normal; font-weight: 500; font-size: 13px !important; letter-spacing: 1.8px; text-transform: uppercase; line-height: 1.3;
+}
+.ff-post__body .ff-rc-sheet h3::after { content: ' \2665'; color: #e8b4a2; }
+.ff-post__body .ff-rc-cols { display: flex; flex-wrap: wrap; gap: 24px; margin: 0 0 24px; }
+.ff-post__body .ff-rc-ingredients, .ff-post__body .ff-rc-method { background: var(--card); border: 1px solid rgba(195,200,189,0.6); border-radius: 14px; padding: 24px 26px; }
+.ff-post__body .ff-rc-ingredients { flex: 1 1 300px; }
+.ff-post__body .ff-rc-method { flex: 1.5 1 420px; }
+.ff-post__body .ff-rc-ingredients p { margin: 18px 0 4px !important; font-family: var(--serif); font-style: italic; font-size: 18px; color: var(--green-dark); }
+.ff-post__body .ff-rc-ingredients ul { margin: 0 0 6px; }
+.ff-post__body .ff-rc-ingredients li { list-style: none; position: relative; padding: 10px 0 10px 22px; margin: 0; border-bottom: 1px dashed var(--soft); font-size: 16px; line-height: 1.45; color: var(--ink); }
+.ff-post__body .ff-rc-ingredients li:last-child { border-bottom: 0; }
+.ff-post__body .ff-rc-ingredients ul + ul { margin-top: 8px; padding-top: 8px; border-top: 2px solid var(--soft); }
+.ff-post__body .ff-rc-ingredients li::before { content: ''; position: absolute; left: 4px; top: 19px; width: 6px; height: 6px; border-radius: 50%; background: var(--rust); }
+.ff-post__body .ff-rc-ingredients li i { font-style: normal; color: rgba(27,28,28,0.65); font-size: 14px; }
+.ff-post__body .ff-rc-method ol { counter-reset: ffstep; }
+.ff-post__body .ff-rc-method li { list-style: none; counter-increment: ffstep; position: relative; min-height: 34px; padding: 4px 0 16px 50px; margin: 0 0 16px; border-bottom: 1px dashed var(--soft); font-size: 16px; line-height: 1.6; color: var(--ink); }
+.ff-post__body .ff-rc-method li:last-child { border-bottom: 0; margin-bottom: 0; padding-bottom: 0; }
+.ff-post__body .ff-rc-method li::before { content: counter(ffstep); position: absolute; left: 0; top: 0; width: 34px; height: 34px; border-radius: 50%; background: var(--ink); color: #fff; font-family: var(--ui); font-weight: 500; font-size: 15px; line-height: 34px; text-align: center; }
+.ff-post__body .ff-rc-extras { display: flex; flex-wrap: wrap; gap: 24px; }
+.ff-post__body .ff-rc-tips, .ff-post__body .ff-rc-variations { flex: 1 1 300px; background: var(--card); border: 1px solid rgba(195,200,189,0.6); border-radius: 14px; padding: 22px 26px; }
+.ff-post__body .ff-rc-variations { background: #eef1ec; }
+.ff-post__body .ff-rc-extras li { list-style: none; position: relative; padding: 0 0 0 18px; margin: 0 0 10px; font-size: 15px; line-height: 1.55; color: var(--body); }
+.ff-post__body .ff-rc-extras li::before { content: ''; position: absolute; left: 2px; top: 10px; width: 5px; height: 5px; border-radius: 50%; background: var(--green-dark); }
+.ff-post__body .ff-rc-extras li b { color: var(--ink); font-weight: 600; }
+
+/* Review: map, 5-photo gallery, scores */
+.ff-post__body .ff-map { position: relative; left: 50%; transform: translateX(-50%); width: 1040px; max-width: 96vw; margin: 0 0 20px; background: var(--card); border: 1px solid rgba(195,200,189,0.45); border-radius: 12px; box-shadow: var(--shadow-card); overflow: hidden; }
+.ff-post__body .ff-map iframe { display: block; width: 100%; height: 340px; border: 0; background: var(--alt); }
+.ff-post__body .ff-map p { margin: 0 !important; padding: 18px 24px 18px 52px; position: relative; font-size: 15px; line-height: 1.5; color: var(--body); }
+.ff-post__body .ff-map p::before {
+  content: ''; position: absolute; left: 22px; top: 20px; width: 18px; height: 18px; background: var(--rust);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21z'/%3E%3Ccircle cx='12' cy='9.5' r='2.5'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21z'/%3E%3Ccircle cx='12' cy='9.5' r='2.5'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.ff-post__body .ff-map p b { display: block; font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 22px; line-height: 1.2; color: var(--green-dark); margin-bottom: 2px; }
+.ff-post__body .ff-map p a { display: inline-block; margin-top: 6px; text-decoration: none; font-family: var(--ui); font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--rust); }
+.ff-post__body .ff-gallery5 { position: relative; left: 50%; transform: translateX(-50%); width: 1040px; max-width: 96vw; margin: 0 0 56px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: 190px; gap: 10px; }
+.ff-post__body .ff-gallery5 > * { margin: 0 !important; overflow: hidden; border-radius: 6px; }
+.ff-post__body .ff-gallery5 > *:first-child { grid-column: span 2; grid-row: span 2; }
+.ff-post__body .ff-gallery5 a { display: block; height: 100%; }
+.ff-post__body .ff-gallery5 img { width: 100%; height: 100% !important; object-fit: cover; border-radius: 0; }
+.ff-post__body .ff-gallery5 .tr-caption-container, .ff-post__body .ff-gallery5 .tr-caption-container tbody, .ff-post__body .ff-gallery5 .tr-caption-container tr, .ff-post__body .ff-gallery5 .tr-caption-container td { display: block; height: 100%; }
+.ff-post__body .ff-gallery5 .tr-caption { display: none; }
+.ff-post__body .ff-scores { margin: 48px 0 0 !important; padding: 26px 30px 12px; background: var(--card); border: 1px solid rgba(195,200,189,0.45); border-radius: 12px; box-shadow: var(--shadow-card); }
+.ff-post__body .ff-scores h2 { margin: 0 0 8px !important; font-size: 30px !important; }
+.ff-post__body .ff-score-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid var(--soft); margin: 0 !important; }
+.ff-post__body .ff-score-row b { font-family: var(--ui); font-weight: 400; font-size: 12px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--ink); }
+.ff-post__body .ff-score-row span { font-family: var(--ui); font-size: 13px; color: rgba(27,28,28,0.7); white-space: nowrap; }
+.ff-post__body .ff-stars { font-style: normal; font-size: 20px; letter-spacing: 3px; margin-right: 10px; vertical-align: -2px; color: var(--rust); }
+.ff-post__body .ff-stars em { font-style: normal; color: var(--sage); }
+
+/* Below the post */
+.ff-post__foot { max-width: 680px; margin: 48px auto 0; padding: 0 24px; }
+.ff-post__tags { display: flex; flex-wrap: wrap; gap: 8px; padding: 22px 0; border-top: 1px solid var(--sage); }
+.ff-post__tags a { display: inline-flex; align-items: center; min-height: 32px; padding: 0 14px; border-radius: 999px; background: var(--soft); font-family: var(--ui); font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--ink); }
+.ff-post__tags a:hover { background: var(--green-dark); color: #fff; }
+.ff-share { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 18px 0; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--sage); }
+.ff-share span { margin-right: 8px; font-family: var(--ui); font-size: 11px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--ink); }
+.ff-share a { display: inline-flex; align-items: center; min-height: 36px; padding: 0 14px; border: 1px solid rgba(195,200,189,0.8); border-radius: 999px; font-family: var(--ui); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--green-dark); }
+.ff-share a:hover { border-color: var(--rust); color: var(--rust); }
+.ff-postnav { display: flex; justify-content: space-between; gap: 24px; padding: 24px 0; }
+.ff-postnav a { display: flex; flex-direction: column; gap: 4px; max-width: 48%; }
+.ff-postnav a:last-child { text-align: right; margin-left: auto; }
+.ff-postnav b { font-family: var(--ui); font-weight: 400; font-size: 11px; letter-spacing: 2.4px; text-transform: uppercase; color: var(--rust); }
+.ff-postnav span { font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--green-dark); }
+
+/* Comments (Blogger's own markup) */
+.ff-comments { max-width: 680px; margin: 32px auto 0; padding: 0 24px; }
+.ff-comments .comments { padding: 30px 32px 24px; background: var(--card); border: 1px solid var(--hairline); border-radius: 12px; box-shadow: var(--shadow-card); }
+.ff-comments .comments h4 { margin: 0 0 16px; padding-bottom: 12px; border-bottom: 1px solid rgba(195,200,189,0.3); font-family: var(--ui); font-style: normal; font-weight: 400; font-size: 12px; letter-spacing: 2.4px; text-transform: uppercase; color: var(--green-dark); }
+.ff-comments .comments .comment-block { background: var(--alt); border: 1px solid rgba(195,200,189,0.3); border-radius: 8px; padding: 14px 16px; }
+.ff-comments .comments .comments-content .user { font-weight: 500; color: var(--green-dark); }
+.ff-comments .comments .comment-actions a, .ff-comments .comments .continue a { font-family: var(--ui); font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--green-dark); }
+.ff-comments .comments .avatar-image-container img { border-radius: 50%; }
+
+/* Contact page form */
+.ff-contact-wrap { max-width: 680px; margin: 24px auto 0; padding: 0 24px; }
+.ff-contact-wrap .widget { padding: 30px 32px 24px; background: var(--card); border: 1px solid var(--hairline); border-radius: 12px; box-shadow: var(--shadow-card); }
+.ff-contact-wrap h2 { margin: 0 0 18px; padding-bottom: 14px; border-bottom: 1px solid rgba(195,200,189,0.3); font-family: var(--ui); font-style: normal; font-weight: 400; font-size: 12px; letter-spacing: 2.4px; text-transform: uppercase; }
+.ff-contact-wrap input[type='text'], .ff-contact-wrap textarea { width: 100% !important; max-width: 100% !important; margin: 6px 0 14px; padding: 12px; border: 1px solid rgba(195,200,189,0.6); border-radius: 6px; background: var(--card); font-family: var(--sans); font-size: 15px; color: var(--ink); }
+.ff-contact-wrap textarea { min-height: 170px; }
+.ff-contact-wrap .contact-form-button-submit { width: 100%; height: auto; min-height: 48px; padding: 14px !important; border: 0; border-radius: 6px; background: var(--rust); background-image: none; color: #fff; font-family: var(--ui); font-size: 13px; letter-spacing: 0.7px; text-transform: uppercase; cursor: pointer; }
+.ff-contact-wrap .contact-form-button-submit:hover { background: var(--green-dark); }
+
+/* 404 */
+.ff-404 { padding: 96px 0; text-align: center; }
+.ff-404 h1 { margin: 0 0 16px; font-size: 120px; line-height: 1; color: var(--rust); }
+
+/* ---------- Footer ---------- */
+.ff-footer { margin-top: 96px; background: var(--alt); border-top: 1px solid var(--hairline); }
+.ff-footer__cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px; padding-top: 64px; }
+.ff-footer__brand img { display: block; height: 28px; width: auto; margin-bottom: 20px; }
+.ff-footer__brand p { margin: 0 0 12px; max-width: 300px; font-size: 14px; line-height: 23px; }
+.ff-footer__social { display: flex; gap: 4px; margin-left: -13px; }
+.ff-footer__social a { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; color: var(--green-dark); }
+.ff-footer__social a:hover { color: var(--rust); }
+.ff-footer__social svg { width: 18px; height: 18px; }
+.ff-footer h3 { margin: 0 0 20px; font-family: var(--ui); font-style: normal; font-weight: 400; font-size: 12px; line-height: 16px; letter-spacing: 2.4px; text-transform: uppercase; color: var(--green-dark); }
+.ff-footer__links { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.ff-footer__links a { display: inline-block; padding: 5px 0; font-size: 14px; color: rgba(27,28,28,0.75); }
+.ff-footer__links a:hover { color: var(--rust); }
+.ff-footer__links .ff-footer__cta { color: var(--rust); font-weight: 500; }
+.ff-footer__legal { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-top: 48px; padding-top: 24px; padding-bottom: 32px; border-top: 1px solid var(--hairline); font-size: 12px; line-height: 16px; color: rgba(27,28,28,0.72); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+  .ff-home .ff-main .ff-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ff-explore { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 980px) {
+  .ff-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ff-hero__title { font-size: 60px; }
+}
+@media (max-width: 880px) {
+  .ff-header__inner { height: 60px; padding: 0 8px 0 16px; gap: 0; }
+  .ff-logo img { height: 24px; }
+  .ff-logo { margin-right: auto; }
+  .ff-nav-toggle { display: inline-flex; order: 3; }
+  .ff-nav { position: absolute; top: 60px; left: 0; right: 0; display: none; background: var(--bg, #fbf9f8); background: #fbf9f8; border-top: 1px solid rgba(195,200,189,0.3); border-bottom: 1px solid rgba(195,200,189,0.3); box-shadow: 0 12px 24px rgba(38,66,36,0.08); padding: 8px 0 16px; }
+  .ff-nav.is-open { display: block; }
+  .ff-nav__list { flex-direction: column; gap: 0; }
+  .ff-nav__list a { display: block; padding: 12px 20px; color: var(--ink); }
+  .ff-nav__list a[aria-current='page']::after { display: none; }
+  .ff-nav__list a[aria-current='page'] { color: var(--rust); }
+  .ff-nav__list a[href*='contact'] { display: inline-block; margin: 12px 20px 4px; }
+}
+@media (max-width: 767px) {
+  .ff-wrap { padding: 0 16px; }
+  .ff-hero { padding-top: 40px; padding-bottom: 80px; gap: 40px; }
+  .ff-hero__title { font-size: 44px; letter-spacing: -1px; margin-bottom: 20px; }
+  .ff-hero__lead { font-size: 17px; line-height: 26px; margin-bottom: 28px; }
+  .ff-hero__actions { gap: 24px; }
+  .ff-hero__media { flex: 1 1 100%; }
+  .ff-feature { height: 420px; }
+  .ff-feature__card { left: 16px; top: auto; bottom: -52px; width: 230px; padding: 22px; }
+  .ff-section { padding-top: 72px; }
+  .ff-section-head { margin-bottom: 32px; gap: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--hairline); }
+  .ff-section-head__title { font-size: 34px; letter-spacing: -0.6px; }
+  .ff-section-head__rule { display: none; }
+  .ff-section-head__link { margin-left: auto; }
+  .ff-grid, .ff-home .ff-main .ff-grid { grid-template-columns: 1fr; gap: 40px; }
+  .ff-explore { gap: 12px; }
+  .ff-tile { flex-direction: column; align-items: flex-start; gap: 14px; padding: 18px; min-height: 120px; }
+  .ff-tile__label { font-size: 20px; }
+  .ff-tile__arrow { display: none; }
+  .ff-who__text { font-size: 16px; line-height: 27px; }
+  .ff-news { padding: 36px 24px; gap: 24px; }
+  .ff-news h2 { font-size: 34px; }
+  .ff-news p { font-size: 16px; }
+  .ff-archive-head h1 { font-size: 36px; }
+  .ff-post__head { padding: 36px 16px 24px; }
+  .ff-post__title { font-size: 36px; letter-spacing: -0.6px; }
+  .ff-post__body { font-size: 17px; padding: 0 16px; }
+  .ff-post__body h2 { font-size: 30px; }
+  .ff-post__body .ff-standfirst { font-size: 19px !important; }
+  .ff-post__body .ff-pullquote { font-size: 24px !important; }
+  .ff-post__body .ff-lead { max-width: 100vw; }
+  .ff-post__body .ff-rc-sheet { padding: 22px 14px 24px; border-radius: 12px; }
+  .ff-post__body .ff-rc-tagline { font-size: 20px !important; }
+  .ff-post__body .ff-rc-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ff-post__body .ff-rc-fact { border-right: 0; border-bottom: 1px dashed var(--sage); }
+  .ff-post__body .ff-rc-ingredients, .ff-post__body .ff-rc-method, .ff-post__body .ff-rc-tips, .ff-post__body .ff-rc-variations { padding: 20px 18px; }
+  .ff-post__body .ff-map iframe { height: 240px; }
+  .ff-post__body .ff-gallery5 { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 140px; gap: 6px; }
+  .ff-post__body .ff-scores { padding: 22px 20px 8px; }
+  .ff-post__foot, .ff-comments, .ff-contact-wrap { padding: 0 16px; }
+  .ff-comments .comments { padding: 20px; }
+  .ff-footer { margin-top: 72px; }
+  .ff-footer__cols { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 24px; padding-top: 48px; }
+  .ff-footer__brand { grid-column: 1 / -1; }
+  .ff-footer__legal { flex-direction: column; gap: 6px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+]]></b:skin>
+
+<b:template-skin><![CDATA[
+body#layout { width: 860px; }
+body#layout .ff-header__inner, body#layout .ff-hero, body#layout .ff-who { display: block; height: auto; }
+body#layout .ff-only-home, body#layout .ff-only-contact, body#layout .ff-nav { display: block !important; position: static; }
+body#layout .section h4 { text-transform: uppercase; letter-spacing: 1.5px; }
+]]></b:template-skin>
+</head>
+
+<body expr:class='&quot;ff &quot; + data:blog.pageType'>
+<b:class cond='data:view.isHomepage' name='ff-home'/>
+<a class='ff-skip' href='#ff-content'>Skip to content</a>
+
+<!-- ===== Header: logo · menu · search ===== -->
+<header class='ff-header'>
+  <div class='ff-header__inner'>
+    <b:section class='ff-logo-section' id='header' maxwidgets='1' name='Logo' showaddelement='no'>
+      <b:widget id='Header1' locked='true' title='FreakinFood (Header)' type='Header' version='1'>
+        <b:widget-settings>
+          <b:widget-setting name='displayUrl'>https://blogger.googleusercontent.com/img/a/AVvXsEgQRM2bQkQWiCpcXadL8P9sLlHim171sox3jAyOLmDCoszFUVCu5FtO_V8zOc5snELd9XpHxZLeKY9JHZOQO4HuchkFp6TcFk33WRJnv4D0z-Vua_4PWxTKs2VNDsVgDI5E1u64gR9xmU1AMGSiDJFTSqb_q2F_9ZxECf6fCNuo_JVxriIR-ikQE0U-pdw=s248</b:widget-setting>
+          <b:widget-setting name='displayHeight'>57</b:widget-setting>
+          <b:widget-setting name='sectionWidth'>217</b:widget-setting>
+          <b:widget-setting name='useImage'>true</b:widget-setting>
+          <b:widget-setting name='shrinkToFit'>false</b:widget-setting>
+          <b:widget-setting name='imagePlacement'>REPLACE</b:widget-setting>
+          <b:widget-setting name='displayWidth'>248</b:widget-setting>
+        </b:widget-settings>
+        <b:includable id='main'>
+          <a class='ff-logo' expr:href='data:blog.homepageUrl'>
+            <b:if cond='data:useImage'>
+              <img expr:alt='data:title' expr:src='data:sourceUrl'/>
+            <b:else/>
+              <span class='ff-logo__text'><data:title/></span>
+            </b:if>
+          </a>
+        </b:includable>
+      </b:widget>
+    </b:section>
+
+    <nav aria-label='Main' class='ff-nav' id='ff-nav'>
+      <b:section class='ff-menu' id='menu' maxwidgets='1' name='Main Menu' showaddelement='no'>
+        <b:widget id='LinkList210' locked='true' title='Menu' type='LinkList' version='1'>
+          <b:widget-settings>
+            <b:widget-setting name='sorting'>NONE</b:widget-setting>
+            <b:widget-setting name='text-0'>Home</b:widget-setting>
+            <b:widget-setting name='link-0'>/</b:widget-setting>
+            <b:widget-setting name='text-1'>Recipes</b:widget-setting>
+            <b:widget-setting name='link-1'>/search/label/Recipes</b:widget-setting>
+            <b:widget-setting name='text-2'>Drinks</b:widget-setting>
+            <b:widget-setting name='link-2'>/search/label/Drinks</b:widget-setting>
+            <b:widget-setting name='text-3'>Stories</b:widget-setting>
+            <b:widget-setting name='link-3'>/search/label/Stories</b:widget-setting>
+            <b:widget-setting name='text-4'>Reviews</b:widget-setting>
+            <b:widget-setting name='link-4'>/search/label/Reviews</b:widget-setting>
+            <b:widget-setting name='text-5'>About</b:widget-setting>
+            <b:widget-setting name='link-5'>/p/about-us.html</b:widget-setting>
+            <b:widget-setting name='text-6'>Contact</b:widget-setting>
+            <b:widget-setting name='link-6'>/p/contact-us.html</b:widget-setting>
+          </b:widget-settings>
+          <b:includable id='main'>
+            <ul class='ff-nav__list'>
+              <b:loop values='data:links' var='link'>
+                <li><a expr:href='data:link.target'><data:link.name/></a></li>
+              </b:loop>
+            </ul>
+          </b:includable>
+        </b:widget>
+      </b:section>
+    </nav>
+
+    <button aria-controls='ff-search' aria-expanded='false' aria-label='Search' class='ff-icon-btn' id='ff-search-toggle' type='button'>
+      <svg aria-hidden='true' viewBox='0 0 24 24'><circle cx='11' cy='11' r='7'/><path d='M20 20l-4-4'/></svg>
+    </button>
+    <button aria-controls='ff-nav' aria-expanded='false' aria-label='Menu' class='ff-icon-btn ff-nav-toggle' id='ff-nav-toggle' type='button'>
+      <svg aria-hidden='true' viewBox='0 0 24 24'><path d='M4 7h16'/><path d='M4 12h16'/><path d='M4 17h16'/></svg>
+    </button>
+  </div>
+  <form action='/search' class='ff-search' id='ff-search' method='get' role='search'>
+    <div class='ff-wrap ff-search__inner'>
+      <label class='ff-sr' for='ff-q'>Search FreakinFood</label>
+      <input id='ff-q' name='q' placeholder='Search recipes, drinks, reviews…' type='search'/>
+      <button class='ff-btn ff-btn--primary' type='submit'>Search</button>
+    </div>
+  </form>
+</header>
+
+<!-- ===== Homepage hero: intro (left) + featured post (right) ===== -->
+<div class='ff-only-home'>
+  <section class='ff-wrap ff-hero'>
+    <div class='ff-hero__text'>
+      <b:section class='ff-hero-intro' id='ff-hero' maxwidgets='1' name='Homepage intro' showaddelement='no'>
+        <b:widget id='HTML401' locked='false' title='' type='HTML' version='1'>
+          <b:widget-settings>
+            <b:widget-setting name='content'><![CDATA[<span class="ff-eyebrow">Italy × Vietnam × Sweden</span>
+<h1 class="ff-hero__title">Playful recipes, cozy drinks &amp; honest restaurant reviews</h1>
+<p class="ff-hero__lead">We are Emanuel (Italy) and Son (Vietnam), a couple living in Sweden, sharing our food obsessions: soft cookies, bold noodle soups, creamy pastas, street food, cocktails and everything in between.</p>
+<div class="ff-hero__actions">
+  <a class="ff-btn ff-btn--cta" href="/search/label/Recipes">Browse recipes</a>
+  <a class="ff-textlink" href="/p/about-us.html">Who we are</a>
+</div>]]></b:widget-setting>
+          </b:widget-settings>
+          <b:includable id='main'>
+            <data:content/>
+          </b:includable>
+        </b:widget>
+      </b:section>
+    </div>
+    <div class='ff-hero__media'>
+      <b:section class='ff-hero-feature' id='ff-featured' maxwidgets='1' name='Homepage featured post' showaddelement='no'>
+        <b:widget id='FeaturedPost1' locked='false' title='Today’s pick' type='FeaturedPost'>
+          <b:widget-settings>
+            <b:widget-setting name='showSnippet'>false</b:widget-setting>
+            <b:widget-setting name='showPostTitle'>true</b:widget-setting>
+            <b:widget-setting name='showFirstImage'>true</b:widget-setting>
+            <b:widget-setting name='useMostRecentPost'>true</b:widget-setting>
+          </b:widget-settings>
+          <b:includable id='main'>
+            <div class='ff-feature'>
+              <a aria-hidden='true' class='ff-feature__img' expr:href='data:postUrl' tabindex='-1'>
+                <b:if cond='data:postFirstImage != &quot;&quot;'>
+                  <img alt='' expr:src='data:postFirstImage'/>
+                </b:if>
+              </a>
+              <a class='ff-feature__card' expr:href='data:postUrl'>
+                <span class='ff-feature__eyebrow'><b:if cond='data:title != &quot;&quot;'><data:title/><b:else/>Today’s pick</b:if></span>
+                <span class='ff-feature__title'><data:postTitle/></span>
+                <span class='ff-feature__cue'>Read the story →</span>
+              </a>
+            </div>
+          </b:includable>
+        </b:widget>
+      </b:section>
+    </div>
+  </section>
+</div>
+
+<!-- ===== Today's highlights: posts labelled "Highlight", filled in by the script at the end ===== -->
+<b:if cond='data:view.isHomepage'>
+  <section class='ff-wrap ff-section' hidden='hidden' id='ff-highlights'>
+    <div class='ff-section-head'>
+      <div><span class='ff-eyebrow'>Fresh this week</span><h2 class='ff-section-head__title'>Today’s Highlights</h2></div>
+      <span class='ff-section-head__rule'/>
+      <a class='ff-section-head__link' href='/search/label/Highlight'>View all →</a>
+    </div>
+    <div class='ff-grid' id='ff-highlights-grid'/>
+  </section>
+</b:if>
+
+<!-- ===== Main: latest posts on the homepage, section grids, single posts and pages ===== -->
+<main class='ff-main' id='ff-content'>
+  <b:section class='main' id='main' name='Posts' showaddelement='no'>
+    <b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog' version='1'>
+      <b:widget-settings>
+        <b:widget-setting name='showDateHeader'>false</b:widget-setting>
+        <b:widget-setting name='showShareButtons'>false</b:widget-setting>
+        <b:widget-setting name='authorLabel'>By</b:widget-setting>
+        <b:widget-setting name='showCommentLink'>true</b:widget-setting>
+        <b:widget-setting name='showAuthor'>true</b:widget-setting>
+        <b:widget-setting name='style.unittype'>TextAndImage</b:widget-setting>
+        <b:widget-setting name='reactionsLabel'/>
+        <b:widget-setting name='showAuthorProfile'>false</b:widget-setting>
+        <b:widget-setting name='style.layout'>1x1</b:widget-setting>
+        <b:widget-setting name='showLabels'>true</b:widget-setting>
+        <b:widget-setting name='showLocation'>false</b:widget-setting>
+        <b:widget-setting name='showTimestamp'>true</b:widget-setting>
+        <b:widget-setting name='postsPerAd'>1</b:widget-setting>
+        <b:widget-setting name='showBacklinks'>false</b:widget-setting>
+        <b:widget-setting name='showInlineAds'>false</b:widget-setting>
+        <b:widget-setting name='showReactions'>false</b:widget-setting>
+      </b:widget-settings>
+
+      <b:includable id='main' var='top'>
+        <b:if cond='data:blog.pageType in {&quot;item&quot;,&quot;static_page&quot;}'>
+          <b:loop values='data:posts' var='post'>
+            <b:include data='post' name='ffSingle'/>
+          </b:loop>
+        <b:elseif cond='data:blog.pageType == &quot;error_page&quot;'/>
+          <div class='ff-wrap ff-404'>
+            <h1>404</h1>
+            <p>Sorry, that page isn’t on the menu.</p>
+            <a class='ff-btn ff-btn--primary' expr:href='data:blog.homepageUrl'>Back to the homepage</a>
+          </div>
+        <b:else/>
+          <div class='ff-wrap ff-section'>
+            <b:if cond='data:view.isHomepage'>
+              <div class='ff-section-head'>
+                <div><h2 class='ff-section-head__title'>Latest from the Blog</h2></div>
+                <span class='ff-section-head__rule'/>
+                <a class='ff-section-head__link' href='/search'>All posts →</a>
+              </div>
+            <b:else/>
+              <b:include name='ffArchiveHead'/>
+            </b:if>
+            <b:if cond='data:posts'>
+              <div class='ff-grid'>
+                <b:loop values='data:posts' var='post'>
+                  <b:include data='post' name='ffCard'/>
+                </b:loop>
+              </div>
+            <b:else/>
+              <p class='ff-empty'>Nothing here yet — new posts are on their way.</p>
+            </b:if>
+            <b:if cond='data:newerPageUrl or data:olderPageUrl'>
+              <nav aria-label='More posts' class='ff-pager'>
+                <b:if cond='data:newerPageUrl'><a expr:href='data:newerPageUrl'>← Newer posts</a><b:else/><span/></b:if>
+                <b:if cond='data:olderPageUrl'><a expr:href='data:olderPageUrl'>Older posts →</a></b:if>
+              </nav>
+            </b:if>
+          </div>
+        </b:if>
+      </b:includable>
+
+      <b:includable id='ffArchiveHead'>
+        <header class='ff-archive-head'>
+          <b:if cond='data:view.isLabelSearch'>
+            <span class='ff-eyebrow'>The Blog</span>
+            <h1><data:view.search.label/></h1>
+            <b:if cond='data:view.search.label == &quot;Recipes&quot;'><p>Recipes we cook and test at home: Vietnamese, Italian and Swedish.</p></b:if>
+            <b:if cond='data:view.search.label == &quot;Drinks&quot;'><p>Cozy drinks, coffee and cocktails for slow evenings.</p></b:if>
+            <b:if cond='data:view.search.label == &quot;Stories&quot;'><p>Food talk, eating habits and the stories behind what ends up on our plates.</p></b:if>
+            <b:if cond='data:view.search.label == &quot;Reviews&quot;'><p>Honest notes on the cafés and restaurants we try, with real photos.</p></b:if>
+          <b:elseif cond='data:view.search.query'/>
+            <span class='ff-eyebrow'>Search</span>
+            <h1>Results for “<data:view.search.query/>”</h1>
+          <b:elseif cond='data:blog.pageType == &quot;archive&quot;'/>
+            <span class='ff-eyebrow'>Archive</span>
+            <h1><data:blog.pageName/></h1>
+          <b:else/>
+            <span class='ff-eyebrow'>FreakinFood</span>
+            <h1>The Blog</h1>
+            <p>Everything we publish, newest first. Pick a section to narrow it down.</p>
+          </b:if>
+          <nav aria-label='Sections' class='ff-pills'>
+            <a expr:class='data:view.isLabelSearch ? &quot;&quot; : &quot;is-active&quot;' href='/search'>All</a>
+            <a expr:class='data:view.search.label == &quot;Recipes&quot; ? &quot;is-active&quot; : &quot;&quot;' href='/search/label/Recipes'>Recipes</a>
+            <a expr:class='data:view.search.label == &quot;Drinks&quot; ? &quot;is-active&quot; : &quot;&quot;' href='/search/label/Drinks'>Drinks</a>
+            <a expr:class='data:view.search.label == &quot;Stories&quot; ? &quot;is-active&quot; : &quot;&quot;' href='/search/label/Stories'>Stories</a>
+            <a expr:class='data:view.search.label == &quot;Reviews&quot; ? &quot;is-active&quot; : &quot;&quot;' href='/search/label/Reviews'>Reviews</a>
+          </nav>
+        </header>
+      </b:includable>
+
+      <b:includable id='ffCard' var='post'>
+        <article class='ff-card'>
+          <a aria-hidden='true' class='ff-card__media' expr:href='data:post.url' tabindex='-1'>
+            <b:if cond='data:post.thumbnailUrl'>
+              <img alt='' expr:src='resizeImage(data:post.thumbnailUrl, 640, &quot;16:9&quot;)' loading='lazy'/>
+            </b:if>
+          </a>
+          <b:if cond='data:post.labels'>
+            <p class='ff-card__eyebrow'>
+              <b:loop values='data:post.labels' var='label'>
+                <b:if cond='data:label.name != &quot;Highlight&quot;'><span><data:label.name/></span></b:if>
+              </b:loop>
+            </p>
+          </b:if>
+          <h3 class='ff-card__title'><a expr:href='data:post.url'><data:post.title/></a></h3>
+          <b:if cond='data:post.snippet'>
+            <p class='ff-card__excerpt'><data:post.snippet/></p>
+          </b:if>
+        </article>
+      </b:includable>
+
+      <b:includable id='ffSingle' var='post'>
+        <article class='ff-post'>
+          <header class='ff-post__head'>
+            <b:if cond='data:blog.pageType == &quot;item&quot;'>
+              <b:if cond='data:post.labels'>
+                <p class='ff-post__section'>
+                  <b:loop index='i' values='data:post.labels' var='label'>
+                    <b:if cond='data:i == 0'><a expr:href='data:label.url'><data:label.name/></a></b:if>
+                  </b:loop>
+                </p>
+              </b:if>
+            </b:if>
+            <h1 class='ff-post__title'><data:post.title/></h1>
+            <b:if cond='data:blog.pageType == &quot;item&quot;'>
+              <p class='ff-post__meta'>
+                <span>By <data:post.author/></span>
+                <time expr:datetime='data:post.timestampISO8601'><data:post.timestamp/></time>
+                <span class='ff-readtime'/>
+              </p>
+            </b:if>
+          </header>
+          <div class='ff-post__body post-body entry-content' expr:id='&quot;post-body-&quot; + data:post.id'>
+            <data:post.body/>
+          </div>
+          <b:if cond='data:blog.pageType == &quot;item&quot;'>
+            <footer class='ff-post__foot'>
+              <b:if cond='data:post.labels'>
+                <div class='ff-post__tags'>
+                  <b:loop values='data:post.labels' var='label'>
+                    <b:if cond='data:label.name != &quot;Highlight&quot;'><a expr:href='data:label.url' rel='tag'><data:label.name/></a></b:if>
+                  </b:loop>
+                </div>
+              </b:if>
+              <div class='ff-share'>
+                <span>Share</span>
+                <a expr:href='&quot;https://pinterest.com/pin/create/button/?url=&quot; + data:post.url + &quot;&amp;media=&quot; + data:post.firstImageUrl + &quot;&amp;description=&quot; + data:post.title' rel='nofollow noopener' target='_blank'>Pinterest</a>
+                <a expr:href='&quot;https://www.facebook.com/sharer.php?u=&quot; + data:post.url' rel='nofollow noopener' target='_blank'>Facebook</a>
+                <a expr:href='&quot;https://wa.me/?text=&quot; + data:post.title + &quot; &quot; + data:post.url' rel='nofollow noopener' target='_blank'>WhatsApp</a>
+                <a expr:href='&quot;mailto:?subject=&quot; + data:post.title + &quot;&amp;body=&quot; + data:post.url'>Email</a>
+              </div>
+              <nav aria-label='More posts' class='ff-postnav'>
+                <b:if cond='data:newerPageUrl'><a expr:href='data:newerPageUrl'><b>Newer</b><span><data:newerPageTitle/></span></a></b:if>
+                <b:if cond='data:olderPageUrl'><a expr:href='data:olderPageUrl'><b>Older</b><span><data:olderPageTitle/></span></a></b:if>
+              </nav>
+            </footer>
+          </b:if>
+          <b:include data='post' name='postQuickEdit'/>
+        </article>
+        <div class='ff-comments'>
+          <b:include cond='data:blog.pageType in {&quot;static_page&quot;,&quot;item&quot;}' data='post' name='comment_picker'/>
+        </div>
+      </b:includable>
+
+      <!-- Blogger's standard comment includables (kept as Blogger ships them) -->
+      <b:includable id='postQuickEdit' var='post'>
+        <b:if cond='data:post.editUrl'>
+          <span expr:class='&quot;item-control &quot; + data:post.adminClass'>
+            <a expr:href='data:post.editUrl' expr:title='data:top.editPostMsg'>
+              <img alt='' class='icon-action' height='18' src='https://resources.blogblog.com/img/icon18_edit_allbkg.gif' width='18'/>
+            </a>
+          </span>
+        </b:if>
+      </b:includable>
+      <b:includable id='comment_picker' var='post'>
+        <b:if cond='data:post.commentSource == 1'>
+          <b:include data='post' name='iframe_comments'/>
+        <b:elseif cond='data:post.showThreadedComments'/>
+          <b:include data='post' name='threaded_comments'/>
+        <b:else/>
+          <b:include data='post' name='comments'/>
+        </b:if>
+      </b:includable>
+      <b:includable id='iframe_comments' var='post'>
+        <b:if cond='data:post.allowIframeComments'>
+          <script expr:src='data:post.iframeCommentSrc' type='text/javascript'/>
+          <div class='cmt_iframe_holder' expr:data-href='data:post.url.canonical' expr:data-viewtype='data:post.viewType'/>
+          <b:if cond='data:post.embedCommentForm == &quot;false&quot;'>
+            <a expr:href='data:post.addCommentUrl' expr:onclick='data:post.addCommentOnclick'><data:postCommentMsg/></a>
+          </b:if>
+        </b:if>
+      </b:includable>
+      <b:includable id='threaded_comments' var='post'>
+        <div class='comments' id='comments'>
+          <a name='comments'/>
+          <h4><data:post.commentLabelFull/>:</h4>
+          <div class='comments-content'>
+            <b:include cond='data:post.embedCommentForm' data='post' name='threaded_comment_js'/>
+            <div id='comment-holder'>
+              <data:post.commentHtml/>
+            </div>
+          </div>
+          <p class='comment-footer'>
+            <b:if cond='data:post.allowNewComments'>
+              <b:include data='post' name='threaded-comment-form'/>
+            <b:else/>
+              <data:post.noNewCommentsText/>
+            </b:if>
+          </p>
+          <b:if cond='data:showCmtPopup'>
+            <div id='comment-popup'>
+              <iframe allowtransparency='true' frameborder='0' id='comment-actions' name='comment-actions' scrolling='no'>
+              </iframe>
+            </div>
+          </b:if>
+        </div>
+      </b:includable>
+      <b:includable id='threaded-comment-form' var='post'>
+        <div class='comment-form'>
+          <a name='comment-form'/>
+          <p><data:blogCommentMessage/></p>
+          <data:blogTeamBlogMessage/>
+          <a expr:href='data:post.commentFormIframeSrc' id='comment-editor-src'/>
+          <iframe allowtransparency='true' class='blogger-iframe-colorize blogger-comment-from-post' expr:height='data:cmtIframeInitialHeight' frameborder='0' id='comment-editor' name='comment-editor' src='' width='100%'/>
+          <data:post.cmtfpIframe/>
+          <script type='text/javascript'>
+            BLOG_CMT_createIframe(&#39;<data:post.appRpcRelayPath/>&#39;);
+          </script>
+        </div>
+      </b:includable>
+      <b:includable id='threaded_comment_js' var='post'>
+        <script async='async' expr:src='data:post.commentSrc' type='text/javascript'/>
+        <script type='text/javascript'>
+          (function() {
+            var items = <data:post.commentJso/>;
+            var msgs = <data:post.commentMsgs/>;
+            var config = <data:post.commentConfig/>;
+// <![CDATA[
+            var cursor = null;
+            if (items && items.length > 0) {
+              cursor = parseInt(items[items.length - 1].timestamp) + 1;
+            }
+            var bodyFromEntry = function(entry) {
+              if (entry.gd$extendedProperty) {
+                for (var k in entry.gd$extendedProperty) {
+                  if (entry.gd$extendedProperty[k].name == 'blogger.contentRemoved') {
+                    return '<span class="deleted-comment">' + entry.content.$t + '</span>';
+                  }
+                }
+              }
+              return entry.content.$t;
+            }
+            var parse = function(data) {
+              cursor = null;
+              var comments = [];
+              if (data && data.feed && data.feed.entry) {
+                for (var i = 0, entry; entry = data.feed.entry[i]; i++) {
+                  var comment = {};
+                  var id = /blog-(\d+).post-(\d+)/.exec(entry.id.$t);
+                  comment.id = id ? id[2] : null;
+                  comment.body = bodyFromEntry(entry);
+                  comment.timestamp = Date.parse(entry.published.$t) + '';
+                  if (entry.author && entry.author.constructor === Array) {
+                    var auth = entry.author[0];
+                    if (auth) {
+                      comment.author = {
+                        name: (auth.name ? auth.name.$t : undefined),
+                        profileUrl: (auth.uri ? auth.uri.$t : undefined),
+                        avatarUrl: (auth.gd$image ? auth.gd$image.src : undefined)
+                      };
+                    }
+                  }
+                  if (entry.link) {
+                    if (entry.link[2]) {
+                      comment.link = comment.permalink = entry.link[2].href;
+                    }
+                    if (entry.link[3]) {
+                      var pid = /.*comments\/default\/(\d+)\?.*/.exec(entry.link[3].href);
+                      if (pid && pid[1]) {
+                        comment.parentId = pid[1];
+                      }
+                    }
+                  }
+                  comment.deleteclass = 'item-control blog-admin';
+                  if (entry.gd$extendedProperty) {
+                    for (var k in entry.gd$extendedProperty) {
+                      if (entry.gd$extendedProperty[k].name == 'blogger.itemClass') {
+                        comment.deleteclass += ' ' + entry.gd$extendedProperty[k].value;
+                      } else if (entry.gd$extendedProperty[k].name == 'blogger.displayTime') {
+                        comment.displayTime = entry.gd$extendedProperty[k].value;
+                      }
+                    }
+                  }
+                  comments.push(comment);
+                }
+              }
+              return comments;
+            };
+            var paginator = function(callback) {
+              if (hasMore()) {
+                var url = config.feed + '?alt=json&v=2&orderby=published&reverse=false&max-results=50';
+                if (cursor) {
+                  url += '&published-min=' + new Date(cursor).toISOString();
+                }
+                window.bloggercomments = function(data) {
+                  var parsed = parse(data);
+                  cursor = parsed.length < 50 ? null
+                      : parseInt(parsed[parsed.length - 1].timestamp) + 1
+                  callback(parsed);
+                  window.bloggercomments = null;
+                }
+                url += '&callback=bloggercomments';
+                var script = document.createElement('script');
+                script.type = 'text/javascript';
+                script.src = url;
+                document.getElementsByTagName('head')[0].appendChild(script);
+              }
+            };
+            var hasMore = function() {
+              return !!cursor;
+            };
+            var getMeta = function(key, comment) {
+              if ('iswriter' == key) {
+                var matches = !!comment.author
+                    && comment.author.name == config.authorName
+                    && comment.author.profileUrl == config.authorUrl;
+                return matches ? 'true' : '';
+              } else if ('deletelink' == key) {
+                return config.baseUri + '/delete-comment.g?blogID='
+                     + config.blogId + '&postID=' + comment.id;
+              } else if ('deleteclass' == key) {
+                return comment.deleteclass;
+              }
+              return '';
+            };
+            var replybox = null;
+            var replyUrlParts = null;
+            var replyParent = undefined;
+            var onReply = function(commentId, domId) {
+              if (replybox == null) {
+                replybox = document.getElementById('comment-editor');
+                if (replybox != null) {
+                  replybox.height = '250px';
+                  replybox.style.display = 'block';
+                  replyUrlParts = replybox.src.split('#');
+                }
+              }
+              if (replybox && (commentId !== replyParent)) {
+                replybox.src = '';
+                document.getElementById(domId).insertBefore(replybox, null);
+                replybox.src = replyUrlParts[0]
+                    + (commentId ? '&parentID=' + commentId : '')
+                    + '#' + replyUrlParts[1];
+                replyParent = commentId;
+              }
+            };
+            var hash = (window.location.hash || '#').substring(1);
+            var startThread, targetComment;
+            if (/^comment-form_/.test(hash)) {
+              startThread = hash.substring('comment-form_'.length);
+            } else if (/^c[0-9]+$/.test(hash)) {
+              targetComment = hash.substring(1);
+            }
+            var configJso = {
+              'maxDepth': config.maxThreadDepth
+            };
+            var provider = {
+              'id': config.postId,
+              'data': items,
+              'loadNext': paginator,
+              'hasMore': hasMore,
+              'getMeta': getMeta,
+              'onReply': onReply,
+              'rendered': true,
+              'initComment': targetComment,
+              'initReplyThread': startThread,
+              'config': configJso,
+              'messages': msgs
+            };
+            var render = function() {
+              if (window.goog && window.goog.comments) {
+                var holder = document.getElementById('comment-holder');
+                window.goog.comments.render(holder, provider);
+              }
+            };
+            if (window.goog && window.goog.comments) {
+              render();
+            } else {
+              window.goog = window.goog || {};
+              window.goog.comments = window.goog.comments || {};
+              window.goog.comments.loadQueue = window.goog.comments.loadQueue || [];
+              window.goog.comments.loadQueue.push(render);
+            }
+          })();
+// ]]>
+        </script>
+      </b:includable>
+      <b:includable id='comments' var='post'>
+        <div class='comments' id='comments'>
+          <a name='comments'/>
+          <b:if cond='data:post.allowComments'>
+            <h4><data:post.commentLabelFull/>:</h4>
+            <div expr:id='data:widget.instanceId + &quot;_comments-block-wrapper&quot;'>
+              <dl expr:class='data:post.avatarIndentClass' id='comments-block'>
+                <b:loop values='data:post.comments' var='comment'>
+                  <dt expr:class='&quot;comment-author &quot; + data:comment.authorClass' expr:id='data:comment.anchorName'>
+                    <a expr:name='data:comment.anchorName'/>
+                    <b:if cond='data:blog.enabledCommentProfileImages'>
+                      <data:comment.authorAvatarImage/>
+                    </b:if>
+                    <b:if cond='data:comment.authorUrl'>
+                      <a expr:href='data:comment.authorUrl' rel='nofollow'><data:comment.author/></a>
+                    <b:else/>
+                      <data:comment.author/>
+                    </b:if>
+                    <data:commentPostedByMsg/>
+                  </dt>
+                  <dd class='comment-body' expr:id='data:widget.instanceId + data:comment.cmtBodyIdPostfix'>
+                    <b:if cond='data:comment.isDeleted'>
+                      <span class='deleted-comment'><data:comment.body/></span>
+                    <b:else/>
+                      <p><data:comment.body/></p>
+                    </b:if>
+                  </dd>
+                  <dd class='comment-footer'>
+                    <span class='comment-timestamp'>
+                      <a expr:href='data:comment.url' title='comment permalink'><data:comment.timestamp/></a>
+                      <b:include data='comment' name='commentDeleteIcon'/>
+                    </span>
+                  </dd>
+                </b:loop>
+              </dl>
+            </div>
+            <p class='comment-footer'>
+              <b:if cond='data:post.embedCommentForm'>
+                <b:if cond='data:post.allowNewComments'>
+                  <b:include data='post' name='comment-form'/>
+                <b:else/>
+                  <data:post.noNewCommentsText/>
+                </b:if>
+              <b:elseif cond='data:post.allowComments'/>
+                <a expr:href='data:post.addCommentUrl' expr:onclick='data:post.addCommentOnclick'><data:postCommentMsg/></a>
+              </b:if>
+            </p>
+          </b:if>
+        </div>
+      </b:includable>
+      <b:includable id='comment-form' var='post'>
+        <div class='comment-form'>
+          <a name='comment-form'/>
+          <h4 id='comment-post-message'><data:postCommentMsg/></h4>
+          <p><data:blogCommentMessage/></p>
+          <data:blogTeamBlogMessage/>
+          <a expr:href='data:post.commentFormIframeSrc' id='comment-editor-src'/>
+          <iframe allowtransparency='true' class='blogger-iframe-colorize blogger-comment-from-post' expr:height='data:cmtIframeInitialHeight' frameborder='0' id='comment-editor' name='comment-editor' src='' width='100%'/>
+          <data:post.cmtfpIframe/>
+          <script type='text/javascript'>
+            BLOG_CMT_createIframe(&#39;<data:post.appRpcRelayPath/>&#39;);
+          </script>
+        </div>
+      </b:includable>
+      <b:includable id='commentDeleteIcon' var='comment'>
+        <span expr:class='&quot;item-control &quot; + data:comment.adminClass'>
+          <b:if cond='data:showCmtPopup'>
+            <div class='goog-toggle-button'>
+              <div class='goog-inline-block comment-action-icon'/>
+            </div>
+          <b:else/>
+            <a class='comment-delete' expr:href='data:comment.deleteUrl' expr:title='data:top.deleteCommentMsg'>
+              <img src='https://resources.blogblog.com/img/icon_delete13.gif'/>
+            </a>
+          </b:if>
+        </span>
+      </b:includable>
+    </b:widget>
+  </b:section>
+
+  <!-- Contact form: only on /p/contact-us.html -->
+  <div class='ff-only-contact ff-contact-wrap'>
+    <b:section class='ff-contact-section' id='ff-contact' maxwidgets='1' name='Contact page form' showaddelement='no'>
+      <b:widget id='ContactForm1' locked='false' title='Send us a message' type='ContactForm'>
+        <b:includable id='main'>
+          <b:if cond='data:title != &quot;&quot;'>
+            <h2 class='title'><data:title/></h2>
+          </b:if>
+          <div class='contact-form-widget'>
+            <div class='form'>
+              <form name='contact-form'>
+                <label expr:for='data:widget.instanceId + &quot;_contact-form-name&quot;'><data:contactFormNameMsg/></label>
+                <input class='contact-form-name' expr:id='data:widget.instanceId + &quot;_contact-form-name&quot;' name='name' size='30' type='text' value=''/>
+                <label expr:for='data:widget.instanceId + &quot;_contact-form-email&quot;'><data:contactFormEmailMsg/> *</label>
+                <input class='contact-form-email' expr:id='data:widget.instanceId + &quot;_contact-form-email&quot;' name='email' size='30' type='text' value=''/>
+                <label expr:for='data:widget.instanceId + &quot;_contact-form-email-message&quot;'><data:contactFormMessageMsg/> *</label>
+                <textarea class='contact-form-email-message' cols='25' expr:id='data:widget.instanceId + &quot;_contact-form-email-message&quot;' name='email-message' rows='5'/>
+                <input class='contact-form-button contact-form-button-submit' expr:id='data:widget.instanceId + &quot;_contact-form-submit&quot;' expr:value='data:contactFormSendMsg' type='button'/>
+                <p class='contact-form-error-message' expr:id='data:widget.instanceId + &quot;_contact-form-error-message&quot;'/>
+                <p class='contact-form-success-message' expr:id='data:widget.instanceId + &quot;_contact-form-success-message&quot;'/>
+              </form>
+            </div>
+          </div>
+          <b:include name='quickedit'/>
+        </b:includable>
+      </b:widget>
+    </b:section>
+  </div>
+</main>
+
+<!-- ===== Explore: the four sections ===== -->
+<b:if cond='data:view.isHomepage'>
+  <section class='ff-wrap ff-section'>
+    <div class='ff-section-head'><div><h2 class='ff-section-head__title'>Explore FreakinFood</h2></div><span class='ff-section-head__rule'/></div>
+    <div class='ff-explore'>
+      <a class='ff-tile' href='/search/label/Recipes'>
+        <span class='ff-tile__icon'><svg aria-hidden='true' viewBox='0 0 24 24'><path d='M7 3v8'/><path d='M4.5 3v4.5a2.5 2.5 0 0 0 5 0V3'/><path d='M7 11v10'/><path d='M17 21V3c-2.2 1.2-3.5 3.6-3.5 6.5V13H17'/></svg></span>
+        <span class='ff-tile__label'>Recipes</span><span aria-hidden='true' class='ff-tile__arrow'>→</span>
+      </a>
+      <a class='ff-tile' href='/search/label/Drinks'>
+        <span class='ff-tile__icon'><svg aria-hidden='true' viewBox='0 0 24 24'><path d='M5 4h14l-7 8z'/><path d='M12 12v8'/><path d='M8 20h8'/></svg></span>
+        <span class='ff-tile__label'>Drinks</span><span aria-hidden='true' class='ff-tile__arrow'>→</span>
+      </a>
+      <a class='ff-tile' href='/search/label/Stories'>
+        <span class='ff-tile__icon'><svg aria-hidden='true' viewBox='0 0 24 24'><path d='M4 5h16v11H9l-5 4z'/><path d='M8 9.5h8'/><path d='M8 12.5h5'/></svg></span>
+        <span class='ff-tile__label'>Food Stories &amp; Tips</span><span aria-hidden='true' class='ff-tile__arrow'>→</span>
+      </a>
+      <a class='ff-tile' href='/search/label/Reviews'>
+        <span class='ff-tile__icon ff-tile__icon--rust'><svg aria-hidden='true' viewBox='0 0 24 24'><path d='M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21z'/><circle cx='12' cy='9.5' r='2.5'/></svg></span>
+        <span class='ff-tile__label'>Restaurant Reviews</span><span aria-hidden='true' class='ff-tile__arrow'>→</span>
+      </a>
+    </div>
+  </section>
+</b:if>
+
+<!-- ===== Who we are (edit in Layout › Who we are) ===== -->
+<div class='ff-only-home'>
+  <section class='ff-wrap ff-section'>
+    <b:section class='ff-who-section' id='ff-who' maxwidgets='1' name='Who we are' showaddelement='no'>
+      <b:widget id='HTML402' locked='false' title='' type='HTML' version='1'>
+        <b:widget-settings>
+          <b:widget-setting name='content'><![CDATA[<div class="ff-section-head">
+  <div><span class="ff-eyebrow">The people behind it</span><h2 class="ff-section-head__title">Who We Are</h2></div>
+  <span class="ff-section-head__rule"></span>
+</div>
+<div class="ff-who">
+  <div class="ff-who__text">
+    <p>I’m Emanuel, 31, from Italy. Son is 30, from Vietnam. We live in Sweden and grew up in families where food was everything: Sunday pasta, street noodles, night-market snacks and long dinners with too much talking.</p>
+    <p>On FreakinFood, we mix our traditions and our new Scandinavian life: simple recipes, comfort food, drinks for slow evenings and honest reviews of places we try.</p>
+    <div class="ff-who__people">
+      <div class="ff-person"><span class="ff-person__photo"><img src="https://i.ibb.co/Jw1gKKjG/profilepic.jpg" alt="Emanuel" loading="lazy"></span><span><span class="ff-person__name">Emanuel</span><span class="ff-person__role">Italy → Sweden · Chef</span></span></div>
+      <div class="ff-person"><span class="ff-person__photo"><img src="https://i.ibb.co/bM2P7Qrx/IMG-2362.jpg" alt="Son" loading="lazy"></span><span><span class="ff-person__name">Son</span><span class="ff-person__role">Vietnam → Sweden · Coffee taster</span></span></div>
+    </div>
+  </div>
+  <aside class="ff-note">
+    <h3>About our pictures</h3>
+    <p>All recipe and drink images on FreakinFood are created in an animated, illustration-style with AI to match our playful vibe.</p>
+    <p>For restaurant reviews, we always use real photos we take ourselves, so you see exactly what arrives at the table.</p>
+  </aside>
+</div>]]></b:widget-setting>
+        </b:widget-settings>
+        <b:includable id='main'>
+          <data:content/>
+        </b:includable>
+      </b:widget>
+    </b:section>
+  </section>
+</div>
+
+<!-- ===== Newsletter (edit in Layout › Newsletter; paste your provider's form action) ===== -->
+<div class='ff-wrap ff-section'>
+  <b:section class='ff-news-section' id='ff-news' maxwidgets='1' name='Newsletter' showaddelement='no'>
+    <b:widget id='HTML404' locked='false' title='' type='HTML' version='1'>
+      <b:widget-settings>
+        <b:widget-setting name='content'><![CDATA[<div class="ff-news">
+  <div class="ff-news__text">
+    <span class="ff-eyebrow">Newsletter</span>
+    <h2>Stay in Our Food Bubble</h2>
+    <p>Get new recipes, drinks and reviews from Italy × Vietnam × Sweden straight to your inbox.</p>
+  </div>
+  <!-- Replace action="#" with the form action from your newsletter service (MailerLite, Brevo, Mailchimp…). -->
+  <form action="#" method="post" target="_blank">
+    <label for="ff-news-email">Email address</label>
+    <div class="ff-news__row">
+      <input id="ff-news-email" name="email" type="email" placeholder="you@example.com" required>
+      <button class="ff-btn ff-btn--accent" type="submit">Subscribe</button>
+    </div>
+  </form>
+</div>]]></b:widget-setting>
+      </b:widget-settings>
+      <b:includable id='main'>
+        <data:content/>
+      </b:includable>
+    </b:widget>
+  </b:section>
+</div>
+
+<!-- ===== Footer ===== -->
+<footer class='ff-footer'>
+  <div class='ff-wrap'>
+    <div class='ff-footer__cols'>
+      <div class='ff-footer__brand'>
+        <img alt='FreakinFood' height='28' src='https://blogger.googleusercontent.com/img/a/AVvXsEgQRM2bQkQWiCpcXadL8P9sLlHim171sox3jAyOLmDCoszFUVCu5FtO_V8zOc5snELd9XpHxZLeKY9JHZOQO4HuchkFp6TcFk33WRJnv4D0z-Vua_4PWxTKs2VNDsVgDI5E1u64gR9xmU1AMGSiDJFTSqb_q2F_9ZxECf6fCNuo_JVxriIR-ikQE0U-pdw=s248'/>
+        <p>Playful recipes, cozy drinks &amp; honest restaurant reviews from Italy × Vietnam × Sweden.</p>
+        <div class='ff-footer__social'>
+          <a aria-label='FreakinFood on Instagram' href='https://www.instagram.com/freakinfood.blog' rel='noopener' target='_blank'><svg aria-hidden='true' fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' viewBox='0 0 24 24'><rect height='18' rx='5' width='18' x='3' y='3'/><circle cx='12' cy='12' r='4'/><circle cx='17.5' cy='6.5' r='0.6'/></svg></a>
+          <a aria-label='FreakinFood on Pinterest' href='https://pin.it/7nv0N79m2' rel='noopener' target='_blank'><svg aria-hidden='true' fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' viewBox='0 0 24 24'><circle cx='12' cy='12' r='9'/><path d='M10.6 20.5l1.7-7.6'/><path d='M10.9 13.6c.6.9 1.5 1.3 2.5 1.2 2-.2 3.3-2.2 3.1-4.4-.2-2.3-2.3-3.8-4.8-3.6-2.8.2-4.6 2.3-4.4 4.6.1.9.5 1.7 1.1 2.1'/></svg></a>
+          <a aria-label='FreakinFood on Flipboard' href='https://flipboard.com/@Freakinfood' rel='noopener' target='_blank'><svg aria-hidden='true' fill='currentColor' viewBox='0 0 24 24'><path d='M4 4h16v5.33H9.33V20H4z'/><path d='M9.33 9.33h5.34v5.34H9.33z'/></svg></a>
+          <a aria-label='Email FreakinFood' href='mailto:info@freakinfood.com'><svg aria-hidden='true' fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' viewBox='0 0 24 24'><rect height='14' rx='2' width='18' x='3' y='5'/><path d='M3.5 6l8.5 7 8.5-7'/></svg></a>
+        </div>
+      </div>
+      <nav aria-label='Explore'>
+        <h3>Explore</h3>
+        <ul class='ff-footer__links'>
+          <li><a href='/search/label/Recipes'>Recipes</a></li>
+          <li><a href='/search/label/Drinks'>Drinks</a></li>
+          <li><a href='/search/label/Stories'>Food Stories &amp; Tips</a></li>
+          <li><a href='/search/label/Reviews'>Restaurant Reviews</a></li>
+          <li><a href='/p/about-us.html'>About us</a></li>
+        </ul>
+      </nav>
+      <div>
+        <h3>Contact us</h3>
+        <ul class='ff-footer__links'>
+          <li><a href='mailto:info@freakinfood.com'>info@freakinfood.com</a></li>
+          <li><a class='ff-footer__cta' href='/p/contact-us.html'>Collaborate with us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class='ff-footer__legal'>
+      <span>© 2026 FreakinFood. All rights reserved. By Ema &amp; Son.</span>
+    </div>
+  </div>
+</footer>
+
+<script type='text/javascript'>
+//<![CDATA[
+(function () {
+  var d = document, html = d.documentElement, path = location.pathname;
+
+  /* Page-type classes for blocks the server can't gate */
+  if (/^\/p\/about/.test(path)) { html.className += ' ff-about'; }
+  if (/^\/p\/contact/.test(path)) { html.className += ' ff-contact'; }
+
+  /* Current menu item */
+  var links = d.querySelectorAll('.ff-nav__list a');
+  for (var i = 0; i < links.length; i++) {
+    var a = links[i], p = a.pathname.replace(/\/$/, '') || '/';
+    var here = path.replace(/\/$/, '') || '/';
+    if (p === here) { a.setAttribute('aria-current', 'page'); }
+  }
+
+  /* Mobile menu + search toggles */
+  function toggler(btnId, panelId, focusSel) {
+    var btn = d.getElementById(btnId), panel = d.getElementById(panelId);
+    if (!btn || !panel) { return; }
+    btn.addEventListener('click', function () {
+      var open = panel.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (open && focusSel) { var f = panel.querySelector(focusSel); if (f) { f.focus(); } }
+    });
+    d.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && panel.classList.contains('is-open')) {
+        panel.classList.remove('is-open');
+        btn.setAttribute('aria-expanded', 'false');
+        btn.focus();
+      }
+    });
+  }
+  toggler('ff-nav-toggle', 'ff-nav', 'a');
+  toggler('ff-search-toggle', 'ff-search', 'input');
+
+  /* "N min read" on single posts (about 200 words a minute) */
+  var body = d.querySelector('.item .ff-post__body'), rt = d.querySelector('.ff-readtime');
+  if (body && rt) {
+    var words = (body.innerText || body.textContent || '').split(/\s+/).filter(Boolean).length;
+    rt.textContent = Math.max(1, Math.round(words / 200)) + ' min read';
+  }
+
+  /* Review scores: a number 1-5 in .ff-score-row span becomes stars */
+  var rows = d.querySelectorAll('.ff-post__body .ff-score-row span');
+  for (var r = 0; r < rows.length; r++) {
+    var el = rows[r], m = (el.textContent || '').replace(',', '.').match(/\d+(\.\d+)?/);
+    var n = m ? Math.round(parseFloat(m[0])) : NaN;
+    if (isNaN(n)) { continue; }
+    n = Math.max(0, Math.min(5, n));
+    var stars = d.createElement('i');
+    stars.className = 'ff-stars';
+    stars.setAttribute('role', 'img');
+    stars.setAttribute('aria-label', n + ' out of 5');
+    stars.appendChild(d.createTextNode(new Array(n + 1).join('★')));
+    var empty = d.createElement('em');
+    empty.textContent = new Array(5 - n + 1).join('★');
+    stars.appendChild(empty);
+    el.textContent = n + '/5';
+    el.insertBefore(stars, el.firstChild);
+  }
+
+  /* Today's highlights: the 3 newest posts labelled "Highlight" */
+  var section = d.getElementById('ff-highlights'), grid = d.getElementById('ff-highlights-grid');
+  if (section && grid && window.fetch) {
+    fetch('/feeds/posts/summary/-/Highlight?alt=json&max-results=3')
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        var entries = (data.feed && data.feed.entry) || [];
+        if (!entries.length) { return; }
+        entries.forEach(function (e) {
+          var url = '#';
+          (e.link || []).forEach(function (l) { if (l.rel === 'alternate') { url = l.href; } });
+          var cats = (e.category || []).map(function (c) { return c.term; }).filter(function (t) { return t !== 'Highlight'; });
+          var img = e.media$thumbnail ? e.media$thumbnail.url.replace(/\/s72(-c)?\//, '/w640-h360-p-k-no-nu/').replace(/=s72(-c)?$/, '=w640-h360-p-k-no-nu') : '';
+          var card = d.createElement('article'); card.className = 'ff-card';
+          var media = d.createElement('a'); media.className = 'ff-card__media'; media.href = url; media.tabIndex = -1; media.setAttribute('aria-hidden', 'true');
+          if (img) { var im = d.createElement('img'); im.src = img; im.alt = ''; im.loading = 'lazy'; media.appendChild(im); }
+          card.appendChild(media);
+          if (cats.length) {
+            var eb = d.createElement('p'); eb.className = 'ff-card__eyebrow';
+            cats.slice(0, 2).forEach(function (t) { var s = d.createElement('span'); s.textContent = t; eb.appendChild(s); });
+            card.appendChild(eb);
+          }
+          var h = d.createElement('h3'); h.className = 'ff-card__title';
+          var ha = d.createElement('a'); ha.href = url; ha.textContent = (e.title && e.title.$t) || '';
+          h.appendChild(ha); card.appendChild(h);
+          var sum = (e.summary && e.summary.$t) || '';
+          if (sum) { var p2 = d.createElement('p'); p2.className = 'ff-card__excerpt'; p2.textContent = sum; card.appendChild(p2); }
+          grid.appendChild(card);
+        });
+        section.hidden = false;
+      })
+      .catch(function () {});
+  }
+})();
+//]]>
+</script>
+</body>
+</html>
